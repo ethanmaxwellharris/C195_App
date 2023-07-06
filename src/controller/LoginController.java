@@ -23,6 +23,6 @@ public class LoginController implements Initializable {
     }
 
     public void onButtonAction(ActionEvent actionEvent) {
-        System.out.println("Sign On Button Clicked!");
+        System.out.println("The sign-on button has been clicked!");
     }
 }
