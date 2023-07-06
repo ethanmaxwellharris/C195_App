@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <Label fx:id="welcomeBackLabel" layoutX="43.0" layoutY="23.0" prefHeight="45.0" prefWidth="186.0" text="WELCOME BACK">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="emailLabel" layoutX="43.0" layoutY="109.0" text="Email">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="passwordLabel" layoutX="44.0" layoutY="210.0" text="Password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="signInButtonLabel" layoutX="102.0" layoutY="322.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="45.0" prefWidth="200.0" text="SIGN IN">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Separator layoutX="32.0" layoutY="402.0" opacity="0.49" prefHeight="10.0" prefWidth="330.0" />
+      <Label fx:id="languagePreferenceLabel" layoutX="56.0" layoutY="435.0" text="Language Preference:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="welcomeBackSubTextLabel" layoutX="44.0" layoutY="58.0" text="Sign in to continue" textFill="#000000b8">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="45.0" layoutY="136.0" prefHeight="45.0" prefWidth="280.0" />
+      <TextField layoutX="45.0" layoutY="237.0" prefHeight="45.0" prefWidth="280.0" />
+      <ChoiceBox layoutX="198.0" layoutY="433.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
