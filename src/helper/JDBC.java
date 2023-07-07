@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
-    private static final String location = "//localhost/";
-    private static final String databaseName = "client_schedule";
+    private static final String location = "//localhost/"; // //wgudb.ucertify.com:3306/ in Kinkead's informal-informational
+    private static final String databaseName = "client_schedule"; // WJ06YG0 in Kinkead's informal-informational
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
@@ -19,7 +19,7 @@ public abstract class JDBC {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
-            System.out.println("Connection successful!");
+            System.out.println("Database connection successful!");
         }
         catch(Exception e)
         {
@@ -27,10 +27,14 @@ public abstract class JDBC {
         }
     }
 
+    public static Connection getConnection(){
+        return connection;
+    }
+
     public static void closeConnection() {
         try {
             connection.close();
-            System.out.println("Connection closed!");
+            System.out.println("Database connection closed!");
         }
         catch(Exception e)
         {
