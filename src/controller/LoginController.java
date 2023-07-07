@@ -23,7 +23,6 @@ public class LoginController implements Initializable {
     public Button signInButtonLabel;
     public Button exitButton;
     public Label languagePreferenceLabel;
-    Stage stage;
 
 
     @Override
