@@ -28,20 +28,14 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-         System.out.println("LoginController is Initialized!");
-
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("Main Menu");
-        stage.setScene(scene);
-        stage.show();
+        System.out.println("LoginController is Initialized!");
     }
 
     @FXML
     public void onActionSignIn(ActionEvent actionEvent) throws IOException {
         System.out.println("The sign-on button has been clicked!");
-
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Main Menu");
         stage.setScene(scene);
