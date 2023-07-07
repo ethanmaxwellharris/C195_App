@@ -1,4 +1,4 @@
-package helper;
+package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +12,7 @@ public class DBCountries {
 
         try {
             String sql = "SELECT * FROM countries";
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 int countryID = rs.getInt("Country_ID");
@@ -31,7 +31,7 @@ public class DBCountries {
         System.out.println("CREATE DATE TEST");
         String sql = "select Create_Date from countries";
         try {
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 Timestamp ts = rs.getTimestamp("Create Date");

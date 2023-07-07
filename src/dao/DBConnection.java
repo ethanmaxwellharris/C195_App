@@ -1,9 +1,9 @@
-package helper;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public abstract class JDBC {
+public abstract class DBConnection {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
     private static final String location = "//localhost/"; // //wgudb.ucertify.com:3306/ in Kinkead's informal-informational

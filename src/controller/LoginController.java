@@ -11,10 +11,12 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
     public Label welcomeBackLabel;
     public Label welcomeBackSubTextLabel;
-    public Label emailLabel;
+    public Label usernameLabel;
     public Label passwordLabel;
     public Button signInButtonLabel;
+    public Button cancelButton;
     public Label languagePreferenceLabel;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
