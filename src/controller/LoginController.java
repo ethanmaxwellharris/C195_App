@@ -22,12 +22,12 @@ public class LoginController implements Initializable {
     public Label passwordLabel;
     public Button signInButtonLabel;
     public Button exitButton;
-    public Label languagePreferenceLabel;
+    public Label userLocationLabel;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("LoginController is Initialized!");
+        System.out.println("Login is Initialized!");
     }
 
     @FXML

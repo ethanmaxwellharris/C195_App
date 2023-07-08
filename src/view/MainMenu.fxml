@@ -31,7 +31,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="addCustomerButton" layoutX="29.0" layoutY="494.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Add Customer" />
+      <Button fx:id="addCustomerButton" layoutX="29.0" layoutY="494.0" mnemonicParsing="false" onAction="#onActionAddCustomer" prefHeight="25.0" prefWidth="105.0" text="Add Customer" />
       <Button fx:id="modifyCustomerButton" layoutX="187.0" layoutY="494.0" mnemonicParsing="false" text="Edit Customer" />
       <Button fx:id="deleteCustomerButton" layoutX="29.0" layoutY="529.0" mnemonicParsing="false" text="Delete Customer" />
       <Button fx:id="addAppointmentButton" layoutX="328.0" layoutY="494.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Add Appointment" />

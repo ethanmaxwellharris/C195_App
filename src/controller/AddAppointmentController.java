@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddAppointmentsController implements Initializable {
+public class AddAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add appointments screen initialized");
