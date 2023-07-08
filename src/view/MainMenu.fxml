@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <children>
       <Label layoutX="22.0" layoutY="34.0" text="Customers Reporting" textFill="#000000b8">
          <font>
@@ -80,6 +80,7 @@
             </InnerShadow>
          </effect>
       </Separator>
-      <Button layoutX="1185.0" layoutY="500.0" mnemonicParsing="false" text="Reports" />
+      <Button layoutX="1185.0" layoutY="500.0" mnemonicParsing="false" onAction="#onActionReports" text="Reports" />
+      <Button fx:id="userLogButton" layoutX="1185.0" layoutY="465.0" mnemonicParsing="false" onAction="#onActionUserLog" text="User Log" />
    </children>
 </AnchorPane>
