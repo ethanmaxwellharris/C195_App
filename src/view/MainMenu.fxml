@@ -16,7 +16,7 @@
    <children>
       <Label layoutX="22.0" layoutY="34.0" text="Customers Reporting" textFill="#000000b8">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold Italic" size="18.0" />
          </font>
          <effect>
             <Glow />
@@ -46,7 +46,7 @@
       </TableView>
       <Label layoutX="444.0" layoutY="34.0" text="Appointments Calendar" textFill="#000000b8">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold Italic" size="18.0" />
          </font>
          <effect>
             <Glow />
@@ -59,9 +59,9 @@
       <Button fx:id="deleteAppointmentButton" layoutX="445.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Delete Appointment" />
       <Button fx:id="modifyAppointmentButton" layoutX="1009.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Edit Appointment" />
       <Button fx:id="logoutButton" layoutX="1185.0" layoutY="535.0" mnemonicParsing="false" onAction="#onActionLogout" text="Logout" />
-      <RadioButton layoutX="648.0" layoutY="40.0" mnemonicParsing="false" text="Week View" />
-      <RadioButton layoutX="748.0" layoutY="40.0" mnemonicParsing="false" text="Month View" />
-      <RadioButton layoutX="848.0" layoutY="40.0" mnemonicParsing="false" text="All" />
+      <RadioButton layoutX="655.0" layoutY="40.0" mnemonicParsing="false" text="Week View" />
+      <RadioButton layoutX="755.0" layoutY="40.0" mnemonicParsing="false" text="Month View" />
+      <RadioButton layoutX="855.0" layoutY="40.0" mnemonicParsing="false" text="All" />
       <Separator layoutX="422.0" layoutY="17.0" orientation="VERTICAL" prefHeight="566.0" prefWidth="16.0">
          <effect>
             <InnerShadow>
