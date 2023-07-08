@@ -53,11 +53,11 @@
          </effect>
       </Label>
       <Button fx:id="addCustomerButton" layoutX="21.0" layoutY="500.0" mnemonicParsing="false" onAction="#onActionAddCustomer" prefHeight="25.0" prefWidth="105.0" text="Add Customer" />
-      <Button fx:id="modifyCustomerButton" layoutX="324.0" layoutY="500.0" mnemonicParsing="false" text="Edit Customer" />
+      <Button fx:id="modifyCustomerButton" layoutX="324.0" layoutY="500.0" mnemonicParsing="false" onAction="#onActionModifyCustomer" text="Edit Customer" />
       <Button fx:id="deleteCustomerButton" layoutX="21.0" layoutY="535.0" mnemonicParsing="false" text="Delete Customer" />
       <Button fx:id="addAppointmentButton" layoutX="445.0" layoutY="500.0" mnemonicParsing="false" onAction="#onActionAddAppointment" prefHeight="25.0" prefWidth="131.0" text="Add Appointment" />
       <Button fx:id="deleteAppointmentButton" layoutX="445.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Delete Appointment" />
-      <Button fx:id="modifyAppointmentButton" layoutX="1009.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Edit Appointment" />
+      <Button fx:id="modifyAppointmentButton" layoutX="1009.0" layoutY="500.0" mnemonicParsing="false" onAction="#onActionModifyAppointment" prefHeight="25.0" prefWidth="131.0" text="Edit Appointment" />
       <Button fx:id="logoutButton" layoutX="1185.0" layoutY="535.0" mnemonicParsing="false" onAction="#onActionLogout" text="Logout" />
       <RadioButton layoutX="655.0" layoutY="40.0" mnemonicParsing="false" text="Week View" />
       <RadioButton layoutX="755.0" layoutY="40.0" mnemonicParsing="false" text="Month View" />

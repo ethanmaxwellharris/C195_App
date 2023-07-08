@@ -41,12 +41,32 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    public void onActionModifyCustomer(ActionEvent actionEvent) throws IOException {
+        System.out.println("The modify customer button has been clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Modify Customer Menu");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("The add appointment button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Appointment Menu");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onActionModifyAppointment(ActionEvent actionEvent) throws IOException {
+        System.out.println("The modify appointment button has been clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Modify Appointment Menu");
         stage.setScene(scene);
         stage.show();
     }
@@ -78,4 +98,5 @@ public class MainScreenController implements Initializable {
         alert.showAndWait();
         System.exit(0);
     }
+
 }
