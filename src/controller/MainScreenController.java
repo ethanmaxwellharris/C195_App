@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +22,8 @@ public class MainScreenController implements Initializable {
     public Button deleteAppointmentButton;
     public Button modifyAppointmentButton;
     public Button logoutButton;
+    public TableView appointmentsTableView;
+    public TableView customersTableView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,6 +44,16 @@ public class MainScreenController implements Initializable {
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Customer Menu");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
+        System.out.println("The add appointment button has been clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Add Appointment Menu");
         stage.setScene(scene);
         stage.show();
     }

@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
     public Label welcomeBackLabel;
     public Label welcomeBackSubTextLabel;
-    public Label usernameLabel;
-    public Label passwordLabel;
+    public Label usernameLabel; //incorrect error needs to display
+    public Label passwordLabel; //incorrect error needs to display
     public Button signInButtonLabel;
     public Button exitButton;
     public Label userLocationLabel;

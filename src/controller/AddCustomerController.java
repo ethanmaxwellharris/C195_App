@@ -25,6 +25,7 @@ public class AddCustomerController implements Initializable {
     public Button saveCustomerButton;
     public Button cancelCustomerButton;
 
+
     public void saveCustomerOnAction(ActionEvent actionEvent) {
     }
 
