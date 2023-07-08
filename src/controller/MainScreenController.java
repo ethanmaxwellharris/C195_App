@@ -26,6 +26,7 @@ public class MainScreenController implements Initializable {
     public TableView customersTableView;
     public Button userLogButton;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
@@ -43,12 +44,20 @@ public class MainScreenController implements Initializable {
 
     public void onActionModifyCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("The modify customer button has been clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
-        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Modify Customer Menu");
-        stage.setScene(scene);
-        stage.show();
+        //selectedModifyCustomer = customersTableView.getSelectionModel().getSelectedItem();
+
+        //if (selectedModifyCustomer != null) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Modify Customer Menu");
+            stage.setScene(scene);
+            stage.show();
+        //} else {
+            //Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not selected a customer to modify yet.");
+            //alert.setTitle("No customer selected to modify");
+            //alert.showAndWait();
+        //}
     }
 
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
