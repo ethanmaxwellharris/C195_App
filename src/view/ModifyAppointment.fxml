@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAppointmentController">
+<AnchorPane prefHeight="530.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAppointmentController">
    <children>
       <Label disable="true" layoutX="90.0" layoutY="57.0" text="Appointment ID">
          <font>
@@ -55,9 +55,9 @@
          </font>
       </Label>
       <ComboBox fx:id="apptTypeComboBox" layoutX="200.0" layoutY="230.0" prefWidth="150.0" />
-      <Button fx:id="saveAppointmentButton" layoutX="99.0" layoutY="440.0" mnemonicParsing="false" onAction="#saveAppointmentOnAction" text="Update Appointment" />
-      <Button fx:id="cancelAppointmentButton" layoutX="246.0" layoutY="440.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" />
-      <Separator layoutX="50.0" layoutY="415.0" prefWidth="300.0">
+      <Button fx:id="saveAppointmentButton" layoutX="99.0" layoutY="475.0" mnemonicParsing="false" onAction="#saveAppointmentOnAction" text="Update Appointment" />
+      <Button fx:id="cancelAppointmentButton" layoutX="246.0" layoutY="475.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" />
+      <Separator layoutX="50.0" layoutY="450.0" prefWidth="300.0">
          <effect>
             <DropShadow />
          </effect>
@@ -76,7 +76,7 @@
          </font>
       </Label>
       <DatePicker fx:id="apptDatePicker" layoutX="200.0" layoutY="265.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="114.0" layoutY="335.0" text="Customer ID">
+      <Label layoutX="114.0" layoutY="338.0" text="Customer ID">
          <font>
             <Font size="14.0" />
          </font>
@@ -89,6 +89,12 @@
       <ComboBox fx:id="apptTimeComboBox" layoutX="200.0" layoutY="300.0" prefWidth="150.0" />
       <ComboBox fx:id="custIdComboBox" layoutX="200.0" layoutY="335.0" prefWidth="150.0" />
       <ComboBox fx:id="userIdComboBox" layoutX="200.0" layoutY="370.0" prefWidth="150.0" />
+      <Label layoutX="126.0" layoutY="408.0" text="Contact ID">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="contactIdComboBox" layoutX="200.0" layoutY="405.0" prefWidth="150.0" />
    </children>
    <effect>
       <DropShadow />

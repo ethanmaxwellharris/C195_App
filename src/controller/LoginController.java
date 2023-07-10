@@ -42,16 +42,16 @@ public class LoginController implements Initializable {
         Locale.setDefault(locale);
         ZoneId zoneId = ZoneId.systemDefault();
 
-        try {
-            lang = ResourceBundle.getBundle("login", Locale.getDefault());
-            userLocationLabel2.setText(String.valueOf(zoneId));
-            welcomeBackLabel.setText(lang.getString("Welcome Back"));
-            welcomeBackSubTextLabel.setText(lang.getString("Sign in to continue"));
-            usernameLabel.setText(lang.getString("Username"));
-            passwordLabel.setText(lang.getString("Password"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            lang = ResourceBundle.getBundle("Lang_es_ES.properties", Locale.getDefault());
+//            userLocationLabel2.setText(String.valueOf(zoneId));
+//            welcomeBackLabel.setText(lang.getString("Welcome Back"));
+//            welcomeBackSubTextLabel.setText(lang.getString("Sign in to continue"));
+//            usernameLabel.setText(lang.getString("Username"));
+//            passwordLabel.setText(lang.getString("Password"));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         //Writing to File
         //{code}
