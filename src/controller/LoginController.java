@@ -1,6 +1,8 @@
 package controller;
 
+import dao.DBAppointments;
 import dao.DBConnection;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointments;
 
+import javax.naming.spi.ResolveResult;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -29,8 +35,29 @@ public class LoginController implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle lang) {
         System.out.println("Login is Initialized!");
+        //Language
+        Locale locale = Locale.getDefault();
+        Locale.setDefault(locale);
+        ZoneId zoneId = ZoneId.systemDefault();
+
+        try {
+            lang = ResourceBundle.getBundle("login", Locale.getDefault());
+            userLocationLabel2.setText(String.valueOf(zoneId));
+            welcomeBackLabel.setText(lang.getString("Welcome Back"));
+            welcomeBackSubTextLabel.setText(lang.getString("Sign in to continue"));
+            usernameLabel.setText(lang.getString("Username"));
+            passwordLabel.setText(lang.getString("Password"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Writing to File
+        //{code}
+
+        //15 Minute Alert
+        //{code}
     }
 
     @FXML
@@ -44,54 +71,54 @@ public class LoginController implements Initializable {
         stage.show();
     }
 //Begin Copy Paste from Reddit
-    @FXML
-    public void login(ActionEvent event) throws SQLException {
-
-        Window owner = submitButton.getScene().getWindow();
-
-        System.out.println(usernameTextField.getText());
-        System.out.println(passwordPasswordField.getText());
-
-        if (usernameTextField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter your email id");
-            return;
-        }
-        if (passwordPasswordField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter a password");
-            return;
-        }
-
-        String emailId = usernameTextField.getText();
-        String password = passwordPasswordField.getText();
-
-        DBConnection dao = new dao();
-        boolean flag = DBConnection.getConnection(jdbcUrl, userName, password);
-
-        if (!flag) {
-            infoBox("Please enter correct Email and Password", null, "Failed");
-        } else {
-            infoBox("Login Successful!", null, "Failed");
-        }
-    }
-
-    public static void infoBox(String infoMessage, String headerText, String title) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText(infoMessage);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.showAndWait();
-    }
-
-    private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(owner);
-        alert.show();
-    }
+//    @FXML
+//    public void login(ActionEvent event) throws SQLException {
+//
+//        Window owner = submitButton.getScene().getWindow();
+//
+//        System.out.println(usernameTextField.getText());
+//        System.out.println(passwordPasswordField.getText());
+//
+//        if (usernameTextField.getText().isEmpty()) {
+//            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+//                    "Please enter your email id");
+//            return;
+//        }
+//        if (passwordPasswordField.getText().isEmpty()) {
+//            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+//                    "Please enter a password");
+//            return;
+//        }
+//
+//        String emailId = usernameTextField.getText();
+//        String password = passwordPasswordField.getText();
+//
+//        DBConnection dao = new dao();
+//        boolean flag = DBConnection.getConnection(jdbcUrl, userName, password);
+//
+//        if (!flag) {
+//            infoBox("Please enter correct Email and Password", null, "Failed");
+//        } else {
+//            infoBox("Login Successful!", null, "Failed");
+//        }
+//    }
+//
+//    public static void infoBox(String infoMessage, String headerText, String title) {
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setContentText(infoMessage);
+//        alert.setTitle(title);
+//        alert.setHeaderText(headerText);
+//        alert.showAndWait();
+//    }
+//
+//    private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+//        Alert alert = new Alert(alertType);
+//        alert.setTitle(title);
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.initOwner(owner);
+//        alert.show();
+//    }
 //End CopyPaste from Reddit
     @FXML
     public void onActionExit(ActionEvent actionEvent) {

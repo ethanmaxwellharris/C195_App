@@ -106,4 +106,11 @@ public class Appointments {
     public void setContactId(int contactId) {
         this.contactId = contactId;
     }
+
+    @Override
+    public String toString(){
+        return "[" + appointmentID + "]" + title + " S: " + start + " E: " + end.toLocalDate() + " ==>" + end.toLocalTime();
+    }
 }
+
+

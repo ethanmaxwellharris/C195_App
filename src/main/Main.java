@@ -31,7 +31,9 @@ public class Main extends Application {
         LocalTime nowTime = LocalTime.now();
         LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
         System.out.println("Welcome, it's currently " + nowDateTime + " where you're logged in.");
-        Locale.setDefault(new Locale("en"));
+
+        //Locale.setDefault(new Locale("en"));
+
         DBConnection.openConnection();
         launch(args);
         DBConnection.closeConnection();

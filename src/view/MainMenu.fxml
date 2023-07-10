@@ -6,13 +6,14 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <children>
       <Label layoutX="22.0" layoutY="34.0" text="Customers Reporting" textFill="#000000b8">
          <font>
@@ -38,8 +39,8 @@
             <TableColumn prefWidth="79.0" text="Location" />
             <TableColumn prefWidth="74.0" text="Contact" />
             <TableColumn prefWidth="69.0" text="Type" />
-            <TableColumn prefWidth="69.0" text="Date" />
-            <TableColumn prefWidth="75.0" text="Time" />
+            <TableColumn prefWidth="69.0" text="Start" />
+            <TableColumn prefWidth="75.0" text="End" />
             <TableColumn prefWidth="89.0" text="Customer ID" />
             <TableColumn prefWidth="81.0" text="User ID" />
         </columns>
@@ -59,9 +60,12 @@
       <Button fx:id="deleteAppointmentButton" layoutX="445.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Delete Appointment" />
       <Button fx:id="modifyAppointmentButton" layoutX="1009.0" layoutY="500.0" mnemonicParsing="false" onAction="#onActionModifyAppointment" prefHeight="25.0" prefWidth="131.0" text="Edit Appointment" />
       <Button fx:id="logoutButton" layoutX="1185.0" layoutY="535.0" mnemonicParsing="false" onAction="#onActionLogout" text="Logout" />
-      <RadioButton layoutX="655.0" layoutY="40.0" mnemonicParsing="false" text="Week View" />
-      <RadioButton layoutX="755.0" layoutY="40.0" mnemonicParsing="false" text="Month View" />
-      <RadioButton layoutX="855.0" layoutY="40.0" mnemonicParsing="false" text="All" />
+      <RadioButton fx:id="weekViewRadio" layoutX="655.0" layoutY="40.0" mnemonicParsing="false" text="Week View">
+         <toggleGroup>
+            <ToggleGroup fx:id="viewToggleGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="monthViewRadio" layoutX="755.0" layoutY="40.0" mnemonicParsing="false" text="Month View" toggleGroup="$viewToggleGroup" />
+      <RadioButton fx:id="allViewRadio" layoutX="855.0" layoutY="40.0" mnemonicParsing="false" selected="true" text="All" toggleGroup="$viewToggleGroup" />
       <Separator layoutX="422.0" layoutY="17.0" orientation="VERTICAL" prefHeight="566.0" prefWidth="16.0">
          <effect>
             <InnerShadow>

@@ -1,5 +1,7 @@
 package controller;
 
+import dao.DBAppointments;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import model.Appointments;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +33,23 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
+
+//        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener(
+//                (obs, oldSelection, newAppointment) -> //lambda signature
+//                {
+//                    if (newAppointment != null) {
+//                        System.out.println("Selection Made: " + newAppointment.getAppointmentID());
+//                        lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
+//                    }
+//                }
+//        );
     }
+
+//        ObservableList<Appointments> testList = DBAppointments.getAllAppointments();
+//        for(Appointments a: testList) {
+//            System.out.println(a);
+//        }
+//    }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("The add customer button has been clicked!");
