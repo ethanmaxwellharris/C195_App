@@ -15,7 +15,7 @@ public class DBAppointments {
         ObservableList<Appointments> aList = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM appointments";
+            String sql = "SELECT * FROM client_schedule.appointments;";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -28,10 +28,6 @@ public class DBAppointments {
                 LocalDateTime starting = start.toLocalDateTime(); //Converts timestamp value to LocalDateTime to play nice
                 Timestamp end = rs.getTimestamp("End"); //Does same as above
                 LocalDateTime ending = end.toLocalDateTime();
-                //Create_Date
-                //Created_By
-                //Last_Update
-                //Last_Updated_By
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");

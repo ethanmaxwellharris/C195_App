@@ -1,12 +1,14 @@
 package main;
 
 import dao.DBConnection;
+import dao.DBCustomers;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,7 +25,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         //ResourceBundle rb = ResourceBundle.getBundle("main/Lang_fr_FR.properties", Locale.getDefault());
         //if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("es") || Locale.getDefault().getLanguage().equals("pr"))
         //    System.out.println(rb.getString("hello") + " " + rb.getString("world"));

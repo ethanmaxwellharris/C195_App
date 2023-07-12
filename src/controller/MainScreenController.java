@@ -1,20 +1,22 @@
 package controller;
 
 import dao.DBAppointments;
+import dao.DBCustomers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
+import model.Customers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -25,31 +27,81 @@ public class MainScreenController implements Initializable {
     public Button deleteAppointmentButton;
     public Button modifyAppointmentButton;
     public Button logoutButton;
-    public TableView appointmentsTableView;
-    public TableView customersTableView;
+    public TableView<Appointments> appointmentsTableView;
+    public TableView<Customers> customersTableView;
     public Button userLogButton;
+    public RadioButton weekViewRadio;
+    public ToggleGroup viewToggleGroup;
+    public RadioButton monthViewRadio;
+    public RadioButton allViewRadio;
+    public Label lambdaLabel;
+    public TableColumn custIdCol;
+    public TableColumn custNameCol;
+    public TableColumn custAddressCol;
+    public TableColumn custZipCol;
+    public TableColumn custPhoneCol;
+    public TableColumn apptIDCol;
+    public TableColumn apptTitleCol;
+    public TableColumn apptLocCol;
+    public TableColumn apptContactCol;
+    public TableColumn apptTypeCol;
+    public TableColumn apptStartCol;
+    public TableColumn apptEndCol;
+    public TableColumn apptCustIdCol;
+    public TableColumn apptUserIdCol;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
+        //Confirmed Insert Success
+        int rowsAffected = 0;
+        try {
+            rowsAffected = DBCustomers.modifyCustomer("Dingle Fluven", "700 Club Lane", "24566", "555-555-5554", 5);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if(rowsAffected > 0){
+            System.out.println("Insert Success");
+        } else {
+            System.out.println("Insert Failed");
+        }
 
-//        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener(
-//                (obs, oldSelection, newAppointment) -> //lambda signature
-//                {
-//                    if (newAppointment != null) {
-//                        System.out.println("Selection Made: " + newAppointment.getAppointmentID());
-//                        lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
-//                    }
-//                }
-//        );
+        //Filling Content of TableViews
+        //Filling Customer TableView
+        customersTableView.setItems(DBCustomers.getAllCustomers());
+        custIdCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        custNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        custAddressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        custZipCol.setCellValueFactory(new PropertyValueFactory<>("Postal Code"));
+        custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
+        //Filling Appointment TableView
+        appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+        apptIDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        apptLocCol.setCellValueFactory(new PropertyValueFactory<>("Location"));
+        apptContactCol.setCellValueFactory(new PropertyValueFactory<>("Contact"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("End"));
+        apptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer ID"));
+        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("User ID"));
+
+
+        //Lambda for label generation
+        customersTableView.setItems(Customers.customersObservableList);
+
+        appointmentsTableView.setItems(Appointments.appointmentsObservableList);
+
+        lambdaLabel.setText("Select an Appointment");
+
+        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                System.out.println("Appointment Selection Made");
+                //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
+            }
+        });
     }
-
-//        ObservableList<Appointments> testList = DBAppointments.getAllAppointments();
-//        for(Appointments a: testList) {
-//            System.out.println(a);
-//        }
-//    }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("The add customer button has been clicked!");
