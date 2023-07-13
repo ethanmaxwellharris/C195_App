@@ -5,6 +5,7 @@ import dao.DBCustomers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -35,24 +36,41 @@ public class MainScreenController implements Initializable {
     public RadioButton monthViewRadio;
     public RadioButton allViewRadio;
     public Label lambdaLabel;
+    @FXML
     public TableView<Customers> customersTableView;
+    @FXML
     public TableColumn<Customers, Integer> custIdCol;
+    @FXML
     public TableColumn<Customers, String> custNameCol;
+    @FXML
     public TableColumn<Customers, String> custAddressCol;
+    @FXML
     public TableColumn<Customers, String> custZipCol;
+    @FXML
     public TableColumn<Customers, String> custPhoneCol;
+    @FXML
     public TableView<Appointments> appointmentsTableView;
+    @FXML
     public TableColumn<Appointments, Integer> apptIDCol;
+    @FXML
     public TableColumn<Appointments, String> apptTitleCol;
+    @FXML
     public TableColumn<Appointments, String> apptLocCol;
+    @FXML
     public TableColumn<Appointments, String> apptContactCol;
+    @FXML
     public TableColumn<Appointments, String> apptTypeCol;
+    @FXML
     public TableColumn<Appointments, LocalDateTime> apptStartCol;
+    @FXML
     public TableColumn<Appointments, LocalDateTime> apptEndCol;
+    @FXML
     public TableColumn<Appointments, Integer> apptCustIdCol;
+    @FXML
     public TableColumn<Appointments, Integer> apptUserIdCol;
 
     ObservableList<Customers> getAllCustomers = FXCollections.observableArrayList();
+    ObservableList<Appointments> getAllAppointments = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,7 +90,7 @@ public class MainScreenController implements Initializable {
 
         //Filling Content of TableViews
         //Filling Customer TableView
-        customersTableView.setItems(DBCustomers.getAllCustomers());
+        customersTableView.setItems(Customers.getAllCustomers());
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
