@@ -12,6 +12,14 @@ import java.time.LocalDateTime;
 
 public abstract class DBCustomers {
 
+    public static ObservableList<Customers> customersObservableList = FXCollections.observableArrayList();
+
+    public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
+
+//    public static ObservableList<Customers> getAllCustomers() {
+//        return allCustomers;
+//    }
+
     public static ObservableList<Customers> getAllCustomers() {
         ObservableList<Customers> cuList = FXCollections.observableArrayList();
 

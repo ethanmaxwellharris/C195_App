@@ -2,6 +2,9 @@ package controller;
 
 import dao.DBAppointments;
 import dao.DBCustomers;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,8 +72,8 @@ public class MainScreenController implements Initializable {
     @FXML
     public TableColumn<Appointments, Integer> apptUserIdCol;
 
-    ObservableList<Customers> getAllCustomers = FXCollections.observableArrayList();
-    ObservableList<Appointments> getAllAppointments = FXCollections.observableArrayList();
+//    private static ObservableList<Customers> getAllCustomers = FXCollections.observableArrayList();
+//    ObservableList<Appointments> getAllAppointments = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,38 +93,38 @@ public class MainScreenController implements Initializable {
 
         //Filling Content of TableViews
         //Filling Customer TableView
-        customersTableView.setItems(Customers.getAllCustomers());
-        custIdCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        custNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        custAddressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
-        custZipCol.setCellValueFactory(new PropertyValueFactory<>("Postal Code"));
-        custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
+        custIdCol.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("customerId"));
+        custNameCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerName"));
+        custAddressCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("address"));
+        custZipCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("postalCode"));
+        custPhoneCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("phoneNumber"));
+        customersTableView.setItems(DBCustomers.getAllCustomers());
         //Filling Appointment TableView
+        apptIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        apptLocCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        apptContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         appointmentsTableView.setItems(DBAppointments.getAllAppointments());
-        apptIDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        apptLocCol.setCellValueFactory(new PropertyValueFactory<>("Location"));
-        apptContactCol.setCellValueFactory(new PropertyValueFactory<>("Contact"));
-        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
-        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("End"));
-        apptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer ID"));
-        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("User ID"));
 
 
         //Lambda for label generation
-        customersTableView.setItems(Customers.customersObservableList);
-
-        appointmentsTableView.setItems(Appointments.appointmentsObservableList);
-
-        lambdaLabel.setText("Select an Appointment");
-
-        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                System.out.println("Appointment Selection Made");
-                //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
-            }
-        });
+//        customersTableView.setItems(Customers.customersObservableList);
+//
+//        appointmentsTableView.setItems(Appointments.appointmentsObservableList);
+//
+//        lambdaLabel.setText("Select an Appointment");
+//
+//        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (newSelection != null) {
+//                System.out.println("Appointment Selection Made");
+//                //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
+//            }
+//        });
     }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
