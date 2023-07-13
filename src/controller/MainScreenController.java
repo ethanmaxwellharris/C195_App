@@ -2,6 +2,7 @@ package controller;
 
 import dao.DBAppointments;
 import dao.DBCustomers;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import model.Customers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -27,45 +29,46 @@ public class MainScreenController implements Initializable {
     public Button deleteAppointmentButton;
     public Button modifyAppointmentButton;
     public Button logoutButton;
-    public TableView<Appointments> appointmentsTableView;
-    public TableView<Customers> customersTableView;
     public Button userLogButton;
     public RadioButton weekViewRadio;
     public ToggleGroup viewToggleGroup;
     public RadioButton monthViewRadio;
     public RadioButton allViewRadio;
     public Label lambdaLabel;
-    public TableColumn custIdCol;
-    public TableColumn custNameCol;
-    public TableColumn custAddressCol;
-    public TableColumn custZipCol;
-    public TableColumn custPhoneCol;
-    public TableColumn apptIDCol;
-    public TableColumn apptTitleCol;
-    public TableColumn apptLocCol;
-    public TableColumn apptContactCol;
-    public TableColumn apptTypeCol;
-    public TableColumn apptStartCol;
-    public TableColumn apptEndCol;
-    public TableColumn apptCustIdCol;
-    public TableColumn apptUserIdCol;
+    public TableView<Customers> customersTableView;
+    public TableColumn<Customers, Integer> custIdCol;
+    public TableColumn<Customers, String> custNameCol;
+    public TableColumn<Customers, String> custAddressCol;
+    public TableColumn<Customers, String> custZipCol;
+    public TableColumn<Customers, String> custPhoneCol;
+    public TableView<Appointments> appointmentsTableView;
+    public TableColumn<Appointments, Integer> apptIDCol;
+    public TableColumn<Appointments, String> apptTitleCol;
+    public TableColumn<Appointments, String> apptLocCol;
+    public TableColumn<Appointments, String> apptContactCol;
+    public TableColumn<Appointments, String> apptTypeCol;
+    public TableColumn<Appointments, LocalDateTime> apptStartCol;
+    public TableColumn<Appointments, LocalDateTime> apptEndCol;
+    public TableColumn<Appointments, Integer> apptCustIdCol;
+    public TableColumn<Appointments, Integer> apptUserIdCol;
 
+    ObservableList<Customers> getAllCustomers = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
         //Confirmed Insert Success
-        int rowsAffected = 0;
-        try {
-            rowsAffected = DBCustomers.modifyCustomer("Dingle Fluven", "700 Club Lane", "24566", "555-555-5554", 5);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        if(rowsAffected > 0){
-            System.out.println("Insert Success");
-        } else {
-            System.out.println("Insert Failed");
-        }
+//        int rowsAffected = 0;
+//        try {
+//            rowsAffected = DBCustomers.deleteCustomer(4);
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//        if(rowsAffected > 0){
+//            System.out.println("Delete Success");
+//        } else {
+//            System.out.println("Delete Failed");
+//        }
 
         //Filling Content of TableViews
         //Filling Customer TableView
