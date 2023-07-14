@@ -2,11 +2,6 @@ package controller;
 
 import dao.DBAppointments;
 import dao.DBCustomers;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -39,46 +35,32 @@ public class MainScreenController implements Initializable {
     public RadioButton monthViewRadio;
     public RadioButton allViewRadio;
     public Label lambdaLabel;
-    @FXML
     public TableView<Customers> customersTableView;
-    @FXML
     public TableColumn<Customers, Integer> custIdCol;
-    @FXML
     public TableColumn<Customers, String> custNameCol;
-    @FXML
     public TableColumn<Customers, String> custAddressCol;
-    @FXML
     public TableColumn<Customers, String> custZipCol;
-    @FXML
     public TableColumn<Customers, String> custPhoneCol;
-    @FXML
+    public TableColumn<Customers, String> custCountryCol;
+    public TableColumn<Customers, String> custDivisionCol;
     public TableView<Appointments> appointmentsTableView;
-    @FXML
     public TableColumn<Appointments, Integer> apptIDCol;
-    @FXML
     public TableColumn<Appointments, String> apptTitleCol;
-    @FXML
+    public TableColumn<Appointments, String> apptDescCol;
     public TableColumn<Appointments, String> apptLocCol;
-    @FXML
     public TableColumn<Appointments, String> apptContactCol;
-    @FXML
     public TableColumn<Appointments, String> apptTypeCol;
-    @FXML
     public TableColumn<Appointments, LocalDateTime> apptStartCol;
-    @FXML
     public TableColumn<Appointments, LocalDateTime> apptEndCol;
-    @FXML
     public TableColumn<Appointments, Integer> apptCustIdCol;
-    @FXML
     public TableColumn<Appointments, Integer> apptUserIdCol;
 
-//    private static ObservableList<Customers> getAllCustomers = FXCollections.observableArrayList();
-//    ObservableList<Appointments> getAllAppointments = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
-        //Confirmed Insert Success
+
+        //Warbara JDBC Webinar stuff
 //        int rowsAffected = 0;
 //        try {
 //            rowsAffected = DBCustomers.deleteCustomer(4);
@@ -98,11 +80,13 @@ public class MainScreenController implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("address"));
         custZipCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("postalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("phoneNumber"));
+        custDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
         customersTableView.setItems(DBCustomers.getAllCustomers());
         //Filling Appointment TableView
         apptIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        apptLocCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        apptLocCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        apptDescCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         apptContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
@@ -113,18 +97,26 @@ public class MainScreenController implements Initializable {
 
 
         //Lambda for label generation
-//        customersTableView.setItems(Customers.customersObservableList);
-//
-//        appointmentsTableView.setItems(Appointments.appointmentsObservableList);
-//
-//        lambdaLabel.setText("Select an Appointment");
-//
-//        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection != null) {
-//                System.out.println("Appointment Selection Made");
-//                //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
-//            }
-//        });
+        lambdaLabel.setText("Select an Appointment");
+
+        appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                System.out.println("Appointment Selection Made");
+                lambdaLabel.setText("Appointment Selected");
+                //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
+            }
+        });
+
+        viewToggleGroup.selectedToggleProperty().addListener(
+                (observable, oldSelection, newSelection) -> {
+            if (newSelection == allViewRadio) {
+                appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+            } else if (newSelection == monthViewRadio) {
+                appointmentsTableView.setItems(DBAppointments.getMonthAppointments());
+            } else if (newSelection == weekViewRadio) {
+                appointmentsTableView.setItems(DBAppointments.getWeekAppointments());
+            }
+        });
     }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
@@ -155,6 +147,29 @@ public class MainScreenController implements Initializable {
         //}
     }
 
+    public void onActionDeleteCustomer(ActionEvent actionEvent) {
+        Customers selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
+
+        if(selectedCustomer != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This action will delete the selected customer and any associated appointments - do you wish to continue?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    DBAppointments.deleteCustomerAppointment(selectedCustomer.getCustomerId());
+                    DBCustomers.deleteCustomer(selectedCustomer.getCustomerId());
+                    customersTableView.setItems(DBCustomers.getAllCustomers());
+                    appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+                } catch (SQLException x) {
+                    x.printStackTrace();
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not select a customer to delete yet.");
+            alert.setTitle("No Customer Selected to Delete");
+            alert.showAndWait();
+        }
+    }
+
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("The add appointment button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
@@ -165,7 +180,7 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
-    public void onActionModifyAppointment(ActionEvent actionEvent) throws IOException {
+    public void onActionModifyAppointment(ActionEvent actionEvent) throws IOException{
         System.out.println("The modify appointment button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -173,6 +188,23 @@ public class MainScreenController implements Initializable {
         stage.setTitle("Modify Appointment Menu");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onActionDeleteAppointment(ActionEvent actionEvent) throws IOException {
+        Appointments selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+
+        if(selectedAppointment != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This action will delete the selected  appointments - do you wish to continue?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                DBAppointments.deleteAppointment(selectedAppointment.getAppointmentId());
+                appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not select an appointment to delete yet.");
+            alert.setTitle("No Appointment Selected to Delete");
+            alert.showAndWait();
+        }
     }
 
     public void onActionReports(ActionEvent actionEvent) throws IOException {
@@ -202,5 +234,6 @@ public class MainScreenController implements Initializable {
         alert.showAndWait();
         System.exit(0);
     }
+
 
 }

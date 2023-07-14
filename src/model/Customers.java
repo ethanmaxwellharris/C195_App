@@ -11,14 +11,6 @@ public class Customers {
     private String phoneNumber;
     private int divisionId;
 
-//    public static ObservableList<Customers> customersObservableList = FXCollections.observableArrayList();
-//
-//    public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
-//
-//    public static ObservableList<Customers> getAllCustomers() {
-//        return allCustomers;
-//    }
-
     public Customers(int customerId, String customerName, String address, String postalCode, String phoneNumber, int divisionId) {
         this.customerId = customerId;
         this.customerName = customerName;

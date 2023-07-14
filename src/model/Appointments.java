@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
 
 public class Appointments {
-    private int appointmentID;
+    private int appointmentId;
     private String title;
     private String description;
     private String location;
@@ -26,7 +26,7 @@ public class Appointments {
     }
 
     public Appointments(int appointmentID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId) {
-        this.appointmentID = appointmentID;
+        this.appointmentId = appointmentID;
         this.title = title;
         this.description = description;
         this.location = location;
@@ -38,12 +38,12 @@ public class Appointments {
         this.contactId = contactId;
     }
 
-    public int getAppointmentID() {
-        return appointmentID;
+    public int getAppointmentId() {
+        return appointmentId;
     }
 
-    public void setAppointmentID(int appointmentID) {
-        this.appointmentID = appointmentID;
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
     public String getTitle() {
@@ -120,7 +120,7 @@ public class Appointments {
 
     @Override
     public String toString(){
-        return "[" + appointmentID + "]" + title + " S: " + start + " E: " + end.toLocalDate() + " ==>" + end.toLocalTime();
+        return "[" + appointmentId + "]" + title + " S: " + start + " E: " + end.toLocalDate() + " ==>" + end.toLocalTime();
     }
 }
 

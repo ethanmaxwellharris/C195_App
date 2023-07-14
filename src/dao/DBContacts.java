@@ -18,8 +18,8 @@ public class DBContacts {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int contactId = rs.getInt("Contact ID");
-                String contactName = rs.getString("Name");
+                int contactId = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
                 String email = rs.getString("Email");
                 Contacts co = new Contacts(contactId, contactName, email);
                 coList.add(co);

@@ -11,14 +11,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public abstract class DBCustomers {
-
-    public static ObservableList<Customers> customersObservableList = FXCollections.observableArrayList();
-
-    public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
-
-//    public static ObservableList<Customers> getAllCustomers() {
-//        return allCustomers;
-//    }
+// Used in the Lambda Function - uncomment when ready
+//    public static ObservableList<Customers> customersObservableList = FXCollections.observableArrayList();
+// Do I need this still? I don't think so.
+//    public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
     public static ObservableList<Customers> getAllCustomers() {
         ObservableList<Customers> cuList = FXCollections.observableArrayList();
@@ -68,10 +64,10 @@ public abstract class DBCustomers {
     }
 
     public static int deleteCustomer(int customerId) throws SQLException {
-        String sql = "DELETE FROM client_schedule.customers WHERE Customer_ID = ?";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setInt(1, customerId);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+            String sql = "DELETE FROM client_schedule.customers WHERE Customer_ID = ?";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
     }
 }

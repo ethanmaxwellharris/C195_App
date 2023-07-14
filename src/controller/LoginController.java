@@ -2,6 +2,7 @@ package controller;
 
 import dao.DBAppointments;
 import dao.DBConnection;
+import dao.DBUsers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,12 +15,16 @@ import javafx.stage.Stage;
 import model.Appointments;
 
 import javax.naming.spi.ResolveResult;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class LoginController implements Initializable {
     public Label welcomeBackLabel;
@@ -37,10 +42,11 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle lang) {
         System.out.println("Login is Initialized!");
+
         //Language
-        Locale locale = Locale.getDefault();
-        Locale.setDefault(locale);
-        ZoneId zoneId = ZoneId.systemDefault();
+//        Locale locale = Locale.getDefault();
+//        Locale.setDefault(locale);
+//        ZoneId zoneId = ZoneId.systemDefault();
 
 //        try {
 //            lang = ResourceBundle.getBundle("Lang_es_ES.properties", Locale.getDefault());
@@ -53,8 +59,6 @@ public class LoginController implements Initializable {
 //            e.printStackTrace();
 //        }
 
-        //Writing to File
-        //{code}
 
         //15 Minute Alert
         //{code}
@@ -62,14 +66,30 @@ public class LoginController implements Initializable {
 
     @FXML
     public void onActionSignIn(ActionEvent actionEvent) throws IOException {
-        System.out.println("The sign-on button has been clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
-        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Main Menu");
-        stage.setScene(scene);
-        stage.show();
-    }
+//        LocalDate nowDate = LocalDate.now();
+//        LocalTime nowTime = LocalTime.now();
+//        LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
+//
+//        FileWriter fwriter = new FileWriter("src/files/activity_log.txt", true);
+//        PrintWriter outputFile = new PrintWriter(fwriter);
+//        //ResourceBundle resourceBundle = ResourceBundle.getBundle("src/main/Lang", Locale.getDefault());
+//        String userName = usernameTextField.getText();
+//        String password = passwordPasswordField.getText();
+//        int userId = DBUsers.confirmUser(userName, password);
+//        if (userId > 0) {
+//            outputFile.println("User " + "'" + userName + "'" + " successfully logged in at: " + nowDateTime + "\n");
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Main Menu");
+            stage.setScene(scene);
+            stage.show();
+//        } else if (userId < 0) {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Incorrect Username or Password - please try again.");
+//            outputFile.println("User " + "'" + userName + "'" + " failed logged in at: " + nowDateTime + "\n");
+//        }
+//        outputFile.close();
+//    }
 //Begin Copy Paste from Reddit
 //    @FXML
 //    public void login(ActionEvent event) throws SQLException {
@@ -118,7 +138,7 @@ public class LoginController implements Initializable {
 //        alert.setContentText(message);
 //        alert.initOwner(owner);
 //        alert.show();
-//    }
+}
 //End CopyPaste from Reddit
     @FXML
     public void onActionExit(ActionEvent actionEvent) {
