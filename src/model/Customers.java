@@ -20,6 +20,12 @@ public class Customers {
         this.divisionId = divisionId;
     }
 
+    @Override
+    public String toString(){
+        return "#" + String.valueOf(customerId) + " " + customerName;
+    }
+
+
     public int getCustomerId() {
         return customerId;
     }
@@ -67,4 +73,12 @@ public class Customers {
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
     }
+
+    /*public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }*/
 }

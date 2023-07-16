@@ -109,16 +109,16 @@ public class DBAppointments {
         }
     }
 
-    public static void deleteCustomerAppointment(int customerId) {
-        try {
-            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
-            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-            ps.setInt(1, customerId);
-            ps.executeUpdate();
-        } catch (SQLException x) {
-            x.printStackTrace();
-        }
-    }
+//    public static void deleteCustomerAppointment(int customerId) {
+//        try {
+//            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
+//            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+//            ps.setInt(1, customerId);
+//            ps.executeUpdate();
+//        } catch (SQLException x) {
+//            x.printStackTrace();
+//        }
+//    }
 
     //method to delete customers associated appointments and then the customer can be deleted
 

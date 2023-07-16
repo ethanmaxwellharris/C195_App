@@ -11,6 +11,11 @@ public class Contacts {
         this.email = email;
     }
 
+    @Override
+    public String toString(){
+        return (contactName);
+    }
+
     public int getContactId() {
         return contactId;
     }

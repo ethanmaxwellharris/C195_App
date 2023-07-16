@@ -4,15 +4,13 @@ import dao.DBAppointments;
 import dao.DBContacts;
 import dao.DBCustomers;
 import dao.DBUsers;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Contacts;
@@ -31,15 +29,17 @@ public class AddAppointmentController implements Initializable {
     public TextField apptTitleTextField;
     public TextField apptDescriptionTextField;
     public TextField apptLocationTextField;
-    public ComboBox apptContactComboBox;
-    public ComboBox apptTypeComboBox;
+    public ComboBox<Appointments> apptContactComboBox;
+    public ComboBox<Appointments> apptTypeComboBox;
     public Button saveAppointmentButton;
     public Button cancelAppointmentButton;
-    public DatePicker apptDatePicker;
-    public ComboBox apptTimeComboBox; //Restrict time to 8:00AM to 10:00PM EST including weekends, 7 days a week. Doesn't need a pop-up error. Needs timezone dispalyed as local
-    public ComboBox userIdComboBox;
-    public ComboBox custIdComboBox; //Error needs to be displayed for overlapping customer appointments
-    public ComboBox contactIdComboBox;
+    public ComboBox<Users> userIdComboBox;
+    public ComboBox<Customers> custIdComboBox; //Error needs to be displayed for overlapping customer appointments
+    public ComboBox<Contacts> contactIdComboBox;
+    public DatePicker apptEndDatePicker;
+    public ComboBox apptEndTimeComboBox;
+    public ComboBox apptStartTimeComboBox;
+    public DatePicker apptStartDatePicker;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,15 +48,20 @@ public class AddAppointmentController implements Initializable {
         apptTypeComboBox.setItems(type);
         apptTypeComboBox.setPromptText("Select a Type");
 
-        apptDatePicker.setValue(LocalDate.now());
+        apptStartDatePicker.setValue(LocalDate.now());
+        apptEndDatePicker.setValue(LocalDate.now());
+
         LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(18,0);
+        LocalTime end = LocalTime.of(17,30);
 
         while(start.isBefore(end.plusSeconds(1))){
-            apptTimeComboBox.getItems().add(start);
+            apptStartTimeComboBox.getItems().add(start);
+            apptEndTimeComboBox.getItems().add(start);
             start = start.plusMinutes(30);
         }
-        apptTimeComboBox.getSelectionModel().select(LocalTime.of(8,0)); //Change this to the time restriction of 8:00AM - 10:00PM EST
+
+        apptStartTimeComboBox.getSelectionModel().select(LocalTime.of(8,0)); //Change this to the time restriction of 8:00AM - 10:00PM EST
+        apptEndTimeComboBox.getSelectionModel().select(LocalTime.of(8,0)); //Change this to the time restriction of 8:00AM - 10:00PM EST
 
         ObservableList<Users> users = DBUsers.getAllUsers();
         userIdComboBox.setItems(users);
@@ -71,7 +76,32 @@ public class AddAppointmentController implements Initializable {
         contactIdComboBox.setPromptText("Select a Contact ID");
     }
 
-    public void saveAppointmentOnAction(ActionEvent actionEvent) {
+    public void saveAppointmentOnAction(ActionEvent actionEvent) throws IOException {
+//        StringBuilder sb = new StringBuilder("");
+//
+//        Appointments appt = apptIdTextField.getSelectionModel().getSelectedItem();
+//
+//        if(appt == null){
+//            sb.append("Contact selection is null");
+//        }else{
+//            sb.append("Contact selected " + appt.getContactId());
+//        }
+//        sb.append(" | ");
+//
+//        if(apptTitleTextField == null){
+//            sb.append("Title selection is null");
+//        }else{
+//            sb.append("Title selected " + appt.getTitle());
+//        }
+//        sb.append(" | ");
+//
+//        if(apptTypeComboBox == null){
+//            sb.append("Type selection is null");
+//        }else{
+//            sb.append("Type selected " + appt.getType());
+//        }
+//        System.out.println(sb);
+
 ////        LocalDate date = apptDatePicker.getValue();
 ////        String stvalue = apptTimeComboBox.getTime();
 ////        LocalTime sTime = LocalTime.parse(stvalue);
@@ -88,11 +118,11 @@ public class AddAppointmentController implements Initializable {
 //        } else {
 //            DBAppointments.addAppointment(new Appointments(id, location, etc.));
 //        }
-//        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load());
-//        stage.setScene(scene);
-//        stage.show();
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+        stage.show();
 //        } catch {
 //        }
     }

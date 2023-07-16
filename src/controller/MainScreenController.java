@@ -41,7 +41,7 @@ public class MainScreenController implements Initializable {
     public TableColumn<Customers, String> custAddressCol;
     public TableColumn<Customers, String> custZipCol;
     public TableColumn<Customers, String> custPhoneCol;
-    public TableColumn<Customers, String> custCountryCol;
+    public TableColumn<Customers, String> custFLDCol;
     public TableColumn<Customers, String> custDivisionCol;
     public TableView<Appointments> appointmentsTableView;
     public TableColumn<Appointments, Integer> apptIDCol;
@@ -155,7 +155,6 @@ public class MainScreenController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
-                    DBAppointments.deleteCustomerAppointment(selectedCustomer.getCustomerId());
                     DBCustomers.deleteCustomer(selectedCustomer.getCustomerId());
                     customersTableView.setItems(DBCustomers.getAllCustomers());
                     appointmentsTableView.setItems(DBAppointments.getAllAppointments());
@@ -194,7 +193,7 @@ public class MainScreenController implements Initializable {
         Appointments selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
 
         if(selectedAppointment != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This action will delete the selected  appointments - do you wish to continue?");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This action will delete the selected appointments - do you wish to continue?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 DBAppointments.deleteAppointment(selectedAppointment.getAppointmentId());

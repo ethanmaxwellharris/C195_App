@@ -31,5 +31,9 @@ public class FirstLevelDivisions {
         this.country_id = country_id;
     }
 
+    @Override
+    public String toString() {
+        return (division);
+    }
 
 }

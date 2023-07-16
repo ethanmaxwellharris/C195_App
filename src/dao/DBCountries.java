@@ -19,7 +19,7 @@ public class DBCountries {
             //Iterates through result set, one row at a time
             while(rs.next()){
                 //get results data
-                int country_id = rs.getInt("Country ID");
+                int country_id = rs.getInt("Country_ID");
                 String country_name = rs.getString("Country");
                 Countries c = new Countries(country_id, country_name);
                 clist.add(c); //adds new country object to list
@@ -38,7 +38,7 @@ public class DBCountries {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Timestamp ts = rs.getTimestamp("Create Date");
+                Timestamp ts = rs.getTimestamp("Create_Date");
                 System.out.println("CD: " + ts.toLocalDateTime().toString());
             }
         } catch (SQLException throwables) {

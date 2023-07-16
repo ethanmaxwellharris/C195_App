@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAppointmentController">
+<AnchorPane prefHeight="530.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAppointmentController">
    <children>
       <Label disable="true" layoutX="90.0" layoutY="57.0" text="Appointment ID">
          <font>
@@ -38,7 +38,7 @@
          </font>
       </Label>
       <TextField fx:id="apptLocationTextField" layoutX="200.0" layoutY="160.0" />
-      <Label layoutX="77.0" layoutY="268.0" text="Appointment Date">
+      <Label layoutX="130.0" layoutY="268.0" text="Start Date">
          <font>
             <Font size="14.0" />
          </font>
@@ -55,14 +55,14 @@
          </font>
       </Label>
       <ComboBox fx:id="apptTypeComboBox" layoutX="200.0" layoutY="230.0" prefWidth="150.0" />
-      <Button fx:id="saveAppointmentButton" layoutX="99.0" layoutY="475.0" mnemonicParsing="false" onAction="#saveAppointmentOnAction" text="Update Appointment" />
-      <Button fx:id="cancelAppointmentButton" layoutX="246.0" layoutY="475.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" />
-      <Separator layoutX="50.0" layoutY="450.0" prefWidth="300.0">
+      <Button fx:id="saveAppointmentButton" layoutX="143.0" layoutY="475.0" mnemonicParsing="false" onAction="#saveAppointmentOnAction" text="Update Appointment" />
+      <Button fx:id="cancelAppointmentButton" layoutX="364.0" layoutY="475.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" />
+      <Separator layoutX="50.0" layoutY="450.0" prefWidth="500.0">
          <effect>
             <DropShadow />
          </effect>
       </Separator>
-      <Label layoutX="100.0" layoutY="15.0" text="Modify Appointment">
+      <Label layoutX="200.0" layoutY="15.0" text="Modify Appointment">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
@@ -70,12 +70,12 @@
             <Glow />
          </effect>
       </Label>
-      <Label layoutX="76.0" layoutY="303.0" text="Appointment Time">
+      <Label layoutX="364.0" layoutY="268.0" text="Start Time">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="apptDatePicker" layoutX="200.0" layoutY="265.0" prefHeight="25.0" prefWidth="150.0" />
+      <DatePicker fx:id="apptStartDatePicker" layoutX="200.0" layoutY="265.0" prefHeight="25.0" prefWidth="150.0" />
       <Label layoutX="114.0" layoutY="338.0" text="Customer ID">
          <font>
             <Font size="14.0" />
@@ -86,7 +86,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="apptTimeComboBox" layoutX="200.0" layoutY="300.0" prefWidth="150.0" />
+      <ComboBox fx:id="apptStartTimeComboBox" layoutX="436.0" layoutY="265.0" prefWidth="150.0" />
       <ComboBox fx:id="custIdComboBox" layoutX="200.0" layoutY="335.0" prefWidth="150.0" />
       <ComboBox fx:id="userIdComboBox" layoutX="200.0" layoutY="370.0" prefWidth="150.0" />
       <Label layoutX="126.0" layoutY="408.0" text="Contact ID">
@@ -95,6 +95,18 @@
          </font>
       </Label>
       <ComboBox fx:id="contactIdComboBox" layoutX="200.0" layoutY="405.0" prefWidth="150.0" />
+      <Label layoutX="135.0" layoutY="300.0" text="End Date">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="367.0" layoutY="300.0" text="End Time">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="apptEndDatePicker" layoutX="200.0" layoutY="300.0" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="apptEndTimeComboBox" layoutX="436.0" layoutY="300.0" prefWidth="150.0" />
    </children>
    <effect>
       <DropShadow />

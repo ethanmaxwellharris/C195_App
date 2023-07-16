@@ -17,9 +17,9 @@ public class DBFirstLevelDivisions {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int division_id = rs.getInt("Division ID");
+                int division_id = rs.getInt("Division_ID");
                 String division = rs.getString("Division");
-                int country_id = rs.getInt("Country ID");
+                int country_id = rs.getInt("Country_ID");
                 FirstLevelDivisions f = new FirstLevelDivisions(division_id, division, country_id);
                 fList.add(f);
             }
@@ -37,9 +37,9 @@ public class DBFirstLevelDivisions {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int division_id = rs.getInt("Division ID");
+                int division_id = rs.getInt("Division_ID");
                 String division = rs.getString("Division");
-                int country_id = rs.getInt("Country ID");
+                int country_id = rs.getInt("Country_ID");
                 FirstLevelDivisions us = new FirstLevelDivisions(division_id, division, country_id);
                 usList.add(us);
             }
@@ -58,9 +58,9 @@ public class DBFirstLevelDivisions {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int division_id = rs.getInt("Division ID");
+                int division_id = rs.getInt("Division_ID");
                 String division = rs.getString("Division");
-                int country_id = rs.getInt("Country ID");
+                int country_id = rs.getInt("Country_ID");
                 FirstLevelDivisions can = new FirstLevelDivisions(division_id, division, country_id);
                 canList.add(can);
             }
@@ -78,9 +78,9 @@ public class DBFirstLevelDivisions {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int division_id = rs.getInt("Division ID");
+                int division_id = rs.getInt("Division_ID");
                 String division = rs.getString("Division");
-                int country_id = rs.getInt("Country ID");
+                int country_id = rs.getInt("Country_ID");
                 FirstLevelDivisions uk = new FirstLevelDivisions(division_id, division, country_id);
                 ukList.add(uk);
             }

@@ -28,6 +28,11 @@ public class ModifyAppointmentController implements Initializable {
     public ComboBox apptTimeComboBox;
     public ComboBox custIdComboBox;
     public ComboBox userIdComboBox;
+    public ComboBox apptStartTimeComboBox;
+    public ComboBox contactIdComboBox;
+    public DatePicker apptEndDatePicker;
+    public ComboBox apptEndTimeComboBox;
+    public DatePicker apptStartDatePicker;
 
     public void saveAppointmentOnAction(ActionEvent actionEvent) {
     }
