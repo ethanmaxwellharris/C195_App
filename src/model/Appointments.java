@@ -11,8 +11,8 @@ public class Appointments {
     private String description;
     private String location;
     private String type;
-    private LocalDateTime start; //Can this be changed to date
-    private LocalDateTime end; //Can this be changed to time
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int customerId;
     private int userId;
     private int contactId;

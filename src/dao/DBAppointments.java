@@ -98,6 +98,35 @@ public class DBAppointments {
         return wList;
     }
 
+    public static ObservableList<Appointments> getAppointmentTypes() {
+        ObservableList<Appointments> typeList = FXCollections.observableArrayList();
+        String sql = "SELECT DISTINCT appointments.type FROM client_schedule.appointments;";
+
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int appointmentID = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                Timestamp start = rs.getTimestamp("Start"); //Pulls the Timestamp value from DB
+                LocalDateTime starting = start.toLocalDateTime(); //Converts timestamp value to LocalDateTime to play nice
+                Timestamp end = rs.getTimestamp("End"); //Does same as above
+                LocalDateTime ending = end.toLocalDateTime();
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+                Appointments ap = new Appointments(appointmentID, title, description, location, type, starting, ending, customerId, userId, contactId);
+                typeList.add(ap);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return typeList;
+    }
+
     public static void deleteAppointment(int appointmentId) {
         try {
             String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
