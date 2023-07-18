@@ -3,7 +3,6 @@ package controller;
 import dao.DBAppointments;
 import dao.DBCustomers;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -54,6 +53,7 @@ public class MainScreenController implements Initializable {
     public TableColumn<Appointments, LocalDateTime> apptEndCol;
     public TableColumn<Appointments, Integer> apptCustIdCol;
     public TableColumn<Appointments, Integer> apptUserIdCol;
+    private static Customers selectedModifyCustomer;
 
 
     @Override
@@ -131,20 +131,20 @@ public class MainScreenController implements Initializable {
 
     public void onActionModifyCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("The modify customer button has been clicked!");
-        //selectedModifyCustomer = customersTableView.getSelectionModel().getSelectedItem();
+        selectedModifyCustomer = customersTableView.getSelectionModel().getSelectedItem();
 
-        //if (selectedModifyCustomer != null) {
+        if (selectedModifyCustomer != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Modify Customer Menu");
             stage.setScene(scene);
             stage.show();
-        //} else {
-            //Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not selected a customer to modify yet.");
-            //alert.setTitle("No customer selected to modify");
-            //alert.showAndWait();
-        //}
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not selected a customer to modify yet.");
+            alert.setTitle("No customer selected to modify");
+            alert.showAndWait();
+        }
     }
 
     public void onActionDeleteCustomer(ActionEvent actionEvent) {
@@ -167,6 +167,10 @@ public class MainScreenController implements Initializable {
             alert.setTitle("No Customer Selected to Delete");
             alert.showAndWait();
         }
+    }
+
+    public static Customers getModifyCustomer() {
+        return selectedModifyCustomer;
     }
 
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {

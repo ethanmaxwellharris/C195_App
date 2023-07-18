@@ -57,15 +57,19 @@ public abstract class DBCustomers {
     }
 
     public static void modifyCustomer(String customerName, String address, String postalCode, String phoneNumber, int divisionId, int customerId) throws SQLException {
-        String sql = "UPDATE client_schedule.customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Division_ID=? WHERE Customer_Name=?";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setString(1, customerName);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phoneNumber);
-        ps.setInt(5, divisionId);
-        ps.setInt(6, customerId);
-        ps.executeUpdate();
+        try {
+            String sql = "UPDATE client_schedule.customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Division_ID=? WHERE Customer_ID=?";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+            ps.setString(1, customerName);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phoneNumber);
+            ps.setInt(5, divisionId);
+            ps.setInt(6, customerId);
+            ps.executeUpdate();
+        } catch (SQLException x) {
+            x.printStackTrace();
+        }
     }
 
     public static void deleteCustomer(int customerId) throws SQLException {

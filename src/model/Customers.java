@@ -1,8 +1,5 @@
 package model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class Customers {
     private int customerId;
     private String customerName;
@@ -66,9 +63,7 @@ public class Customers {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getDivisionId() {
-        return divisionId;
-    }
+    public int getDivisionId() { return divisionId; }
 
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;

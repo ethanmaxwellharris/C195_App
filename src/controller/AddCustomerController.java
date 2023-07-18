@@ -35,7 +35,7 @@ public class AddCustomerController implements Initializable {
     public Button cancelCustomerButton;
 
     public void saveCustomerOnAction(ActionEvent actionEvent) throws SQLException, IOException {
-            try {//spot for ID
+            try {
                 String customerName = customerNameTextField.getText();
                 String address = customerAddressTextField.getText();
                 String postalCode = customerPostalTextField.getText();
