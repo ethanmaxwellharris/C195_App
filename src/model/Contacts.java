@@ -12,9 +12,7 @@ public class Contacts {
     }
 
     @Override
-    public String toString(){
-        return (contactName);
-    }
+    public String toString(){ return "#" + String.valueOf(contactId) + " " + (contactName); }
 
     public int getContactId() {
         return contactId;

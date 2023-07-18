@@ -109,6 +109,45 @@ public class DBAppointments {
         }
     }
 
+    public static void addAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId){
+        try {
+            String sql = "INSERT INTO client_schedule.appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setTimestamp(5, Timestamp.valueOf(start));
+            ps.setTimestamp(6, Timestamp.valueOf(end));
+            ps.setInt(7, customerId);
+            ps.setInt(8, userId);
+            ps.setInt(9, contactId);
+            ps.executeUpdate();
+        } catch (SQLException x) {
+            x.printStackTrace();
+        }
+    }
+
+    public static void modifyAppointment(int id, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId){
+        try{
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setTimestamp(5, Timestamp.valueOf(start));
+            ps.setTimestamp(6, Timestamp.valueOf(end));
+            ps.setInt(7, customerId);
+            ps.setInt(8, userId);
+            ps.setInt(9, contactId);
+            ps.setInt(10, id);
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 //    public static void deleteCustomerAppointment(int customerId) {
 //        try {
 //            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
@@ -121,16 +160,4 @@ public class DBAppointments {
 //    }
 
     //method to delete customers associated appointments and then the customer can be deleted
-
-//    public static void modifyAppointmentStart(LocalDateTime ldt){
-//        String sql = "UPDATE appointments SET starting = ? WHERE Appointment_ID = 1";
-//        try{
-//            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-//            Timestamp ts = Timestamp.valueOf(ldt);
-//            ps.setTimestamp(1, ts);
-//            ps.execute();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//    }
 }

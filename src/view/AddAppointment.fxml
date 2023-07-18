@@ -19,7 +19,7 @@
          </font>
       </Label>
       <TextField layoutX="-442.0" layoutY="-25.0" />
-      <TextField fx:id="apptIdTextField" disable="true" layoutX="200.0" layoutY="55.0" />
+      <TextField fx:id="apptIdTextField" disable="true" layoutX="200.0" layoutY="55.0" text="Auto Generated" />
       <Label layoutX="78.0" layoutY="90.0" text="Appointment Title">
          <font>
             <Font size="14.0" />

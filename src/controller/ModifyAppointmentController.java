@@ -9,6 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Appointments;
+import model.Customers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,5 +50,7 @@ public class ModifyAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         apptDatePicker.setValue(LocalDate.now());
+        Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
+
     }
 }

@@ -120,7 +120,7 @@ public class Appointments {
 
     @Override
     public String toString(){
-        return "[" + appointmentId + "]" + title + " S: " + start + " E: " + end.toLocalDate() + " ==>" + end.toLocalTime();
+        return (type);
     }
 }
 

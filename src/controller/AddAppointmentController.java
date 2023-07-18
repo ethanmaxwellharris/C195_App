@@ -77,54 +77,42 @@ public class AddAppointmentController implements Initializable {
     }
 
     public void saveAppointmentOnAction(ActionEvent actionEvent) throws IOException {
-//        StringBuilder sb = new StringBuilder("");
-//
 //        Appointments appt = apptIdTextField.getSelectionModel().getSelectedItem();
-//
-//        if(appt == null){
-//            sb.append("Contact selection is null");
-//        }else{
-//            sb.append("Contact selected " + appt.getContactId());
-//        }
-//        sb.append(" | ");
-//
-//        if(apptTitleTextField == null){
-//            sb.append("Title selection is null");
-//        }else{
-//            sb.append("Title selected " + appt.getTitle());
-//        }
-//        sb.append(" | ");
-//
-//        if(apptTypeComboBox == null){
-//            sb.append("Type selection is null");
-//        }else{
-//            sb.append("Type selected " + appt.getType());
-//        }
-//        System.out.println(sb);
 
-////        LocalDate date = apptDatePicker.getValue();
-////        String stvalue = apptTimeComboBox.getTime();
-////        LocalTime sTime = LocalTime.parse(stvalue);
-////        LocalDateTime sldt = LocalDateTime.of(date, sTime); In theory this is all taking the value from the date picker plus the value from the combobox for the time and then insterting the value into the sldt expression. This will then be placed back into the database for any add's of appointments. In theory. You can combine them.
-//    try {
-//        int id = Integer.parseInt(apptIdTextField.getText());
-//        //the rest
-//
-//        if (id.isBlank()) {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Warning");
-//            alert.setContentText("ID field cannot be left blank - try again");
-//            alert.showAndWait();
-//        } else {
-//            DBAppointments.addAppointment(new Appointments(id, location, etc.));
-//        }
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setScene(scene);
-        stage.show();
-//        } catch {
-//        }
+        try{
+            String title = apptTitleTextField.getText();
+            String description = apptDescriptionTextField.getText();
+            String location = apptLocationTextField.getText();
+            String type = apptTypeComboBox.getSelectionModel().getSelectedItem().getType();
+            LocalDate stDate = apptStartDatePicker.getValue();
+            LocalTime stTime = apptStartTimeComboBox.getSelectionModel().getSelectedItem().getStart();
+            LocalDateTime stDateTime = LocalDateTime.of(stDate, LocalTime.of(stTime));
+            LocalDate endDate = apptEndDatePicker.getValue();
+            LocalTime endTime = apptEndTimeComboBox.getSelectionModel().getSelectedItem().getEnd();
+            LocalDateTime endDateTime = LocalDateTime.of(endDate, LocalTime.of(endTime));
+            Integer customerId = custIdComboBox.getSelectionModel().getSelectedItem().getCustomerId();
+            Integer userId = userIdComboBox.getSelectionModel().getSelectedItem().getUserId();
+            Integer contactId = contactIdComboBox.getSelectionModel().getSelectedItem().getContactId();
+        if(title.isBlank()){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Title cannot be left blank.");
+            alert.showAndWait();
+        }else if (description.isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Description cannot be left blank.");
+            alert.showAndWait();
+        }else if (location.isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Location cannot be left blank.");
+            alert.showAndWait();
+        }else {
+            DBAppointments.addAppointment(new Appointments(title, description, location, type, stTime, endTime, customerId, userId, contactId);
+                Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setScene(scene);
+                stage.show();
+        }
+        } catch (Exception x) {
+                x.printStackTrace();
+            }
     }
 
 

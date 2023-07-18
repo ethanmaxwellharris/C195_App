@@ -15,9 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Countries;
-import model.Customers;
 import model.FirstLevelDivisions;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,33 +32,39 @@ public class AddCustomerController implements Initializable {
     public Button saveCustomerButton;
     public Button cancelCustomerButton;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<Countries> countries = DBCountries.getAllCountries();
+        customerCountryComboBox.setItems(countries);
+        customerCountryComboBox.setPromptText("Select a Country");
+        customerDivisionComboBox.setPromptText("Select Country First");
+    }
+
     public void saveCustomerOnAction(ActionEvent actionEvent) throws SQLException, IOException {
-            try {
-                String customerName = customerNameTextField.getText();
-                String address = customerAddressTextField.getText();
-                String postalCode = customerPostalTextField.getText();
-                String phoneNumber = customerPhoneTextField.getText();
-                Integer divisionId = customerDivisionComboBox.getSelectionModel().getSelectedItem().getDivision_id();
-
-                if (customerName.isBlank() || address.isBlank() || postalCode.isBlank() || phoneNumber.isBlank()) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not filled all forms.");
-                    alert.setTitle("No Form Can be Left Blank");
-                    alert.showAndWait();
-                } else {
-                    DBCustomers.addCustomer(customerName, address, postalCode, phoneNumber, divisionId);
-
-                    Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    stage.setScene(scene);
-                    stage.show();
-                }
-            } catch(NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning");
-                alert.setContentText("Field(s) must have valid values - try again");
+        try {
+            String customerName = customerNameTextField.getText();
+            String address = customerAddressTextField.getText();
+            String postalCode = customerPostalTextField.getText();
+            String phoneNumber = customerPhoneTextField.getText();
+            Integer divisionId = customerDivisionComboBox.getSelectionModel().getSelectedItem().getDivision_id();
+            if (customerName.isBlank() || address.isBlank() || postalCode.isBlank() || phoneNumber.isBlank()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not filled all forms.");
+                alert.setTitle("No Form Can be Left Blank");
                 alert.showAndWait();
-                }
+            } else {
+                DBCustomers.addCustomer(customerName, address, postalCode, phoneNumber, divisionId);
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setScene(scene);
+                stage.show();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setContentText("Field(s) must have valid values - try again");
+            alert.showAndWait();
+        }
     }
 
     public void cancelOnAction(ActionEvent actionEvent) throws IOException {
@@ -84,14 +88,6 @@ public class AddCustomerController implements Initializable {
             alert.setTitle("No Country Selected Yet");
             alert.showAndWait();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Countries> countries = DBCountries.getAllCountries();
-        customerCountryComboBox.setItems(countries);
-        customerCountryComboBox.setPromptText("Select a Country");
-        customerDivisionComboBox.setPromptText("Select Country First");
     }
 
 }

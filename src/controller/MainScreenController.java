@@ -53,28 +53,14 @@ public class MainScreenController implements Initializable {
     public TableColumn<Appointments, LocalDateTime> apptEndCol;
     public TableColumn<Appointments, Integer> apptCustIdCol;
     public TableColumn<Appointments, Integer> apptUserIdCol;
-    private static Customers selectedModifyCustomer;
+    public static Customers selectedModifyCustomer;
+    public static Appointments selectedModifyApppointment;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
 
-        //Warbara JDBC Webinar stuff
-//        int rowsAffected = 0;
-//        try {
-//            rowsAffected = DBCustomers.deleteCustomer(4);
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//        if(rowsAffected > 0){
-//            System.out.println("Delete Success");
-//        } else {
-//            System.out.println("Delete Failed");
-//        }
-
-        //Filling Content of TableViews
-        //Filling Customer TableView
         custIdCol.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("customerId"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerName"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("address"));
@@ -82,7 +68,6 @@ public class MainScreenController implements Initializable {
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("phoneNumber"));
         custDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
         customersTableView.setItems(DBCustomers.getAllCustomers());
-        //Filling Appointment TableView
         apptIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptLocCol.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -173,6 +158,8 @@ public class MainScreenController implements Initializable {
         return selectedModifyCustomer;
     }
 
+
+
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("The add appointment button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
@@ -185,12 +172,20 @@ public class MainScreenController implements Initializable {
 
     public void onActionModifyAppointment(ActionEvent actionEvent) throws IOException{
         System.out.println("The modify appointment button has been clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
-        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Modify Appointment Menu");
-        stage.setScene(scene);
-        stage.show();
+        Appointments selectedModifyApppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedModifyApppointment != null) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
+            Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Modify Appointment Menu");
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not selected an appointment to modify yet.");
+            alert.setTitle("No appointment selected to modify");
+            alert.showAndWait();
+        }
     }
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) throws IOException {
@@ -209,6 +204,11 @@ public class MainScreenController implements Initializable {
             alert.showAndWait();
         }
     }
+
+    public static Appointments getModifyAppointment() {
+        return selectedModifyApppointment;
+    }
+
 
     public void onActionReports(ActionEvent actionEvent) throws IOException {
         System.out.println("The reports button has been clicked!");
