@@ -46,7 +46,7 @@ public class AddCustomerController implements Initializable {
             String address = customerAddressTextField.getText();
             String postalCode = customerPostalTextField.getText();
             String phoneNumber = customerPhoneTextField.getText();
-            Integer divisionId = customerDivisionComboBox.getSelectionModel().getSelectedItem().getDivision_id();
+            int divisionId = customerDivisionComboBox.getSelectionModel().getSelectedItem().getDivision_id();
             if (customerName.isBlank() || address.isBlank() || postalCode.isBlank() || phoneNumber.isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not filled all forms.");
                 alert.setTitle("No Form Can be Left Blank");

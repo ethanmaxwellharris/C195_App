@@ -172,7 +172,7 @@ public class MainScreenController implements Initializable {
 
     public void onActionModifyAppointment(ActionEvent actionEvent) throws IOException{
         System.out.println("The modify appointment button has been clicked!");
-        Appointments selectedModifyApppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+        selectedModifyApppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedModifyApppointment != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));

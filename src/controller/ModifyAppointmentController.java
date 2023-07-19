@@ -1,5 +1,9 @@
 package controller;
 
+import dao.DBAppointments;
+import dao.DBContacts;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +14,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointments;
+import model.Contacts;
 import model.Customers;
+import model.Users;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,16 +28,16 @@ public class ModifyAppointmentController implements Initializable {
     public TextField apptTitleTextField;
     public TextField apptDescriptionTextField;
     public TextField apptLocationTextField;
-    public ComboBox apptContactComboBox;
-    public ComboBox apptTypeComboBox;
+    public ComboBox<Contacts> apptContactComboBox;
+    public ComboBox<Appointments> apptTypeComboBox;
     public Button saveAppointmentButton;
     public Button cancelAppointmentButton;
     public DatePicker apptDatePicker;
     public ComboBox apptTimeComboBox;
-    public ComboBox custIdComboBox;
-    public ComboBox userIdComboBox;
+    public ComboBox<Customers> custIdComboBox;
+    public ComboBox<Users> userIdComboBox;
     public ComboBox apptStartTimeComboBox;
-    public ComboBox contactIdComboBox;
+    public ComboBox<Contacts> contactIdComboBox;
     public DatePicker apptEndDatePicker;
     public ComboBox apptEndTimeComboBox;
     public DatePicker apptStartDatePicker;
@@ -49,8 +55,21 @@ public class ModifyAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        apptDatePicker.setValue(LocalDate.now());
         Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
+        ObservableList<Appointments> appointments = DBAppointments.getAllAppointments();
+        ObservableList<Contacts> contacts = DBContacts.getAllContacts();
+        apptContactComboBox.setItems(contacts);
+
+        try {
+            apptIdTextField.setText(String.valueOf(selectedModifyAppointment.getCustomerId()));
+            apptTitleTextField.setText(String.valueOf(selectedModifyAppointment.getTitle()));
+            apptDescriptionTextField.setText(String.valueOf(selectedModifyAppointment.getDescription()));
+            apptLocationTextField.setText(String.valueOf(selectedModifyAppointment.getLocation()));
+            //apptContactComboBox.getSelectionModel().getSelectedItem(contacts);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 }
