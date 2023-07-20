@@ -11,8 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
    <children>
       <Separator layoutX="275.0" layoutY="30.0" orientation="VERTICAL" prefHeight="572.0" prefWidth="16.0">
          <effect>
@@ -50,8 +49,8 @@
          </effect>
       </Label>
       <Label alignment="CENTER" layoutX="53.0" layoutY="650.0" prefHeight="37.0" prefWidth="178.0" text="Number of Appointments in the United States" textAlignment="CENTER" wrapText="true" />
-      <ComboBox layoutX="91.0" layoutY="101.0" prefWidth="150.0" />
-      <ComboBox layoutX="91.0" layoutY="142.0" prefWidth="150.0" />
+      <ComboBox fx:id="reportAMonthComboBox" layoutX="91.0" layoutY="101.0" prefWidth="150.0" />
+      <ComboBox fx:id="reportATypeComboBox" layoutX="91.0" layoutY="142.0" prefWidth="150.0" />
       <Label layoutX="31.0" layoutY="104.0" prefHeight="17.0" prefWidth="60.0" text="Month">
          <font>
             <Font size="13.0" />
@@ -62,27 +61,27 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <TableView layoutX="31.0" layoutY="183.0" prefHeight="200.0" prefWidth="228.0">
+      <TableView fx:id="reportATableView" layoutX="31.0" layoutY="183.0" prefHeight="200.0" prefWidth="228.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Month" />
-          <TableColumn prefWidth="75.0" text="Type" />
-            <TableColumn prefWidth="75.0" text="Amount" />
+          <TableColumn fx:id="reportAMonthCol" prefWidth="75.0" text="Month" />
+          <TableColumn fx:id="reportATypeCol" prefWidth="75.0" text="Type" />
+            <TableColumn fx:id="reportAAmountCol" prefWidth="75.0" text="Amount" />
         </columns>
       </TableView>
-      <TableView fx:id="reportATableView" layoutX="305.0" layoutY="138.0" prefHeight="409.0" prefWidth="696.0">
+      <TableView fx:id="reportBTableView" layoutX="305.0" layoutY="138.0" prefHeight="409.0" prefWidth="696.0">
          <columns>
-            <TableColumn prefWidth="46.0" text="ID" />
-            <TableColumn prefWidth="113.0" text="Title" />
-            <TableColumn prefWidth="79.0" text="Location" />
-            <TableColumn prefWidth="74.0" text="Contact" />
-            <TableColumn prefWidth="69.0" text="Type" />
-            <TableColumn prefWidth="69.0" text="Date" />
-            <TableColumn prefWidth="75.0" text="Time" />
-            <TableColumn prefWidth="89.0" text="Customer ID" />
-            <TableColumn prefWidth="81.0" text="User ID" />
+            <TableColumn fx:id="reportBIdCol" prefWidth="46.0" text="ID" />
+            <TableColumn fx:id="reportBTitleCol" prefWidth="113.0" text="Title" />
+            <TableColumn fx:id="reportBLocationCol" prefWidth="79.0" text="Location" />
+            <TableColumn fx:id="reportBContactCol" prefWidth="74.0" text="Contact" />
+            <TableColumn fx:id="reportBTypeCol" prefWidth="69.0" text="Type" />
+            <TableColumn fx:id="reportBDateCol" prefWidth="69.0" text="Date" />
+            <TableColumn fx:id="reportBTimeCol" prefWidth="75.0" text="Time" />
+            <TableColumn fx:id="reportBCustomerCol" prefWidth="89.0" text="Customer ID" />
+            <TableColumn fx:id="reportBUserCol" prefWidth="81.0" text="User ID" />
          </columns>
       </TableView>
-      <ComboBox layoutX="357.0" layoutY="101.0" prefWidth="150.0" />
+      <ComboBox fx:id="reportBContactComboBox" layoutX="357.0" layoutY="101.0" prefWidth="150.0" />
       <Label layoutX="297.0" layoutY="104.0" prefHeight="17.0" prefWidth="60.0" text="Contact">
          <font>
             <Font size="13.0" />
@@ -97,26 +96,26 @@
             </InnerShadow>
          </effect>
       </Separator>
-      <TableView fx:id="reportBTableView" layoutX="306.0" layoutY="630.0" prefHeight="165.0" prefWidth="696.0">
+      <TableView fx:id="reportCTableView" layoutX="306.0" layoutY="630.0" prefHeight="165.0" prefWidth="696.0">
          <columns>
-            <TableColumn prefWidth="46.0" text="ID" />
-            <TableColumn prefWidth="113.0" text="Title" />
-            <TableColumn prefWidth="79.0" text="Location" />
-            <TableColumn prefWidth="74.0" text="Contact" />
-            <TableColumn prefWidth="69.0" text="Type" />
-            <TableColumn prefWidth="69.0" text="Date" />
-            <TableColumn prefWidth="75.0" text="Time" />
-            <TableColumn prefWidth="89.0" text="Customer ID" />
-            <TableColumn prefWidth="81.0" text="User ID" />
+            <TableColumn fx:id="reportCIdCol" prefWidth="46.0" text="ID" />
+            <TableColumn fx:id="reportCTitleCol" prefWidth="113.0" text="Title" />
+            <TableColumn fx:id="reportCLocationCol" prefWidth="79.0" text="Location" />
+            <TableColumn fx:id="reportCContactCol" prefWidth="74.0" text="Contact" />
+            <TableColumn fx:id="reportCTypeCol" prefWidth="69.0" text="Type" />
+            <TableColumn fx:id="reportCDateCol" prefWidth="69.0" text="Date" />
+            <TableColumn fx:id="reportCTimeCol" prefWidth="75.0" text="Time" />
+            <TableColumn fx:id="reportCCustomerCol" prefWidth="89.0" text="Customer ID" />
+            <TableColumn fx:id="reportCUserCol" prefWidth="81.0" text="User ID" />
          </columns>
       </TableView>
-      <ComboBox layoutX="97.0" layoutY="755.0" prefWidth="150.0" />
+      <ComboBox fx:id="reportCMonthComboBox" layoutX="97.0" layoutY="755.0" prefWidth="150.0" />
       <Label layoutX="37.0" layoutY="758.0" prefHeight="17.0" prefWidth="60.0" text="Month">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <ComboBox layoutX="97.0" layoutY="713.0" prefWidth="150.0" />
+      <ComboBox fx:id="reportCCountryComboBox" layoutX="97.0" layoutY="713.0" prefWidth="150.0" />
       <Label layoutX="37.0" layoutY="716.0" prefHeight="17.0" prefWidth="60.0" text="Country">
          <font>
             <Font size="13.0" />

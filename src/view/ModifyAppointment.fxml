@@ -38,26 +38,20 @@
          </font>
       </Label>
       <TextField fx:id="apptLocationTextField" layoutX="200.0" layoutY="160.0" />
-      <Label layoutX="130.0" layoutY="268.0" text="Start Date">
+      <Label layoutX="130.0" layoutY="239.0" text="Start Date">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="195.0" text="Appointment Contact">
+      <Label layoutX="76.0" layoutY="201.0" text="Appointment Type">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="apptContactComboBox" layoutX="200.0" layoutY="195.0" prefWidth="150.0" />
-      <Label layoutX="76.0" layoutY="230.0" text="Appointment Type">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="apptTypeComboBox" layoutX="200.0" layoutY="230.0" prefWidth="150.0" />
-      <Button fx:id="saveAppointmentButton" layoutX="143.0" layoutY="475.0" mnemonicParsing="false" onAction="#saveAppointmentOnAction" text="Update Appointment" />
-      <Button fx:id="cancelAppointmentButton" layoutX="364.0" layoutY="475.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" />
-      <Separator layoutX="50.0" layoutY="450.0" prefWidth="500.0">
+      <ComboBox fx:id="apptTypeComboBox" layoutX="200.0" layoutY="201.0" prefWidth="150.0" />
+      <Button fx:id="saveAppointmentButton" layoutX="143.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveAppointmentOnAction" text="Update Appointment" />
+      <Button fx:id="cancelAppointmentButton" layoutX="364.0" layoutY="446.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" />
+      <Separator layoutX="50.0" layoutY="421.0" prefWidth="500.0">
          <effect>
             <DropShadow />
          </effect>
@@ -70,43 +64,43 @@
             <Glow />
          </effect>
       </Label>
-      <Label layoutX="364.0" layoutY="268.0" text="Start Time">
+      <Label layoutX="364.0" layoutY="239.0" text="Start Time">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="apptStartDatePicker" layoutX="200.0" layoutY="265.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="114.0" layoutY="338.0" text="Customer ID">
+      <DatePicker fx:id="apptStartDatePicker" layoutX="200.0" layoutY="236.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="114.0" layoutY="309.0" text="Customer ID">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="146.0" layoutY="373.0" text="User ID">
+      <Label layoutX="146.0" layoutY="344.0" text="User ID">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="apptStartTimeComboBox" layoutX="436.0" layoutY="265.0" prefWidth="150.0" />
-      <ComboBox fx:id="custIdComboBox" layoutX="200.0" layoutY="335.0" prefWidth="150.0" />
-      <ComboBox fx:id="userIdComboBox" layoutX="200.0" layoutY="370.0" prefWidth="150.0" />
-      <Label layoutX="126.0" layoutY="408.0" text="Contact ID">
+      <ComboBox fx:id="apptStartTimeComboBox" layoutX="436.0" layoutY="236.0" prefWidth="150.0" />
+      <ComboBox fx:id="custIdComboBox" layoutX="200.0" layoutY="306.0" prefWidth="150.0" />
+      <ComboBox fx:id="userIdComboBox" layoutX="200.0" layoutY="341.0" prefWidth="150.0" />
+      <Label layoutX="126.0" layoutY="379.0" text="Contact ID">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="contactIdComboBox" layoutX="200.0" layoutY="405.0" prefWidth="150.0" />
-      <Label layoutX="135.0" layoutY="300.0" text="End Date">
+      <ComboBox fx:id="contactIdComboBox" layoutX="200.0" layoutY="376.0" prefWidth="150.0" />
+      <Label layoutX="135.0" layoutY="271.0" text="End Date">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="367.0" layoutY="300.0" text="End Time">
+      <Label layoutX="367.0" layoutY="271.0" text="End Time">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="apptEndDatePicker" layoutX="200.0" layoutY="300.0" prefHeight="25.0" prefWidth="150.0" />
-      <ComboBox fx:id="apptEndTimeComboBox" layoutX="436.0" layoutY="300.0" prefWidth="150.0" />
+      <DatePicker fx:id="apptEndDatePicker" layoutX="200.0" layoutY="271.0" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="apptEndTimeComboBox" layoutX="436.0" layoutY="271.0" prefWidth="150.0" />
    </children>
    <effect>
       <DropShadow />
