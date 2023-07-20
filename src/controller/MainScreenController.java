@@ -237,6 +237,4 @@ public class MainScreenController implements Initializable {
         alert.showAndWait();
         System.exit(0);
     }
-
-
 }

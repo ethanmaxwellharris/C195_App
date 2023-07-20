@@ -2,6 +2,8 @@ package controller;
 
 import dao.DBAppointments;
 import dao.DBContacts;
+import dao.DBCustomers;
+import dao.DBUsers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,8 +34,6 @@ public class ModifyAppointmentController implements Initializable {
     public ComboBox<Appointments> apptTypeComboBox;
     public Button saveAppointmentButton;
     public Button cancelAppointmentButton;
-    public DatePicker apptDatePicker;
-    public ComboBox apptTimeComboBox;
     public ComboBox<Customers> custIdComboBox;
     public ComboBox<Users> userIdComboBox;
     public ComboBox apptStartTimeComboBox;
@@ -57,15 +57,42 @@ public class ModifyAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
         ObservableList<Appointments> appointments = DBAppointments.getAllAppointments();
+        ObservableList<Customers> customers = DBCustomers.getAllCustomers();
+        ObservableList<Users> users = DBUsers.getAllUsers();
         ObservableList<Contacts> contacts = DBContacts.getAllContacts();
-        apptContactComboBox.setItems(contacts);
 
         try {
             apptIdTextField.setText(String.valueOf(selectedModifyAppointment.getCustomerId()));
             apptTitleTextField.setText(String.valueOf(selectedModifyAppointment.getTitle()));
             apptDescriptionTextField.setText(String.valueOf(selectedModifyAppointment.getDescription()));
             apptLocationTextField.setText(String.valueOf(selectedModifyAppointment.getLocation()));
-            //apptContactComboBox.getSelectionModel().getSelectedItem(contacts);
+            apptContactComboBox.setItems(DBContacts.getAllContacts());
+            apptContactComboBox.getSelectionModel().select(selectedModifyAppointment.getContactId());
+            apptStartDatePicker.setValue(selectedModifyAppointment.getStart().toLocalDate());
+            apptStartTimeComboBox.setValue(selectedModifyAppointment.getStart().toLocalTime());
+            apptEndDatePicker.setValue(selectedModifyAppointment.getStart().toLocalDate());
+            apptEndTimeComboBox.setValue(selectedModifyAppointment.getStart().toLocalTime());
+            custIdComboBox.setItems(DBCustomers.getAllCustomers());
+            custIdComboBox.getSelectionModel().select(selectedModifyAppointment.getCustomerId());
+            userIdComboBox.setItems(DBUsers.getAllUsers());
+            userIdComboBox.getSelectionModel().select(selectedModifyAppointment.getUserId());
+            contactIdComboBox.setItems(DBContacts.getAllContacts());
+            contactIdComboBox.getSelectionModel().select(selectedModifyAppointment.getContactId());
+
+            ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
+            for (Appointments appointment : DBAppointments.getAllAppointments()) {
+                String type = appointment.getType();
+                if (type != null && !type.isEmpty() && !appointmentTypes.contains(type)) {
+                    appointmentTypes.add(type);
+                }
+            }
+            appointmentTypes.addAll("Strategy Meeting", "Review Session");
+
+            apptTypeComboBox.setItems(DBAppointments.getAllAppointments());
+
+            //apptTypeComboBox.getSelectionModel().select(selectedModifyAppointment.getType());
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
