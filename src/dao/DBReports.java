@@ -23,8 +23,6 @@ public class DBReports {
                 String type = rs.getString("Type");
                 String month = rs.getString("Month");
                 int total = rs.getInt("TotalAppointments");
-                //Timestamp month = rs.getTimestamp("Start");
-                //LocalDateTime montha = start.toLocalDateTime();
                 Reports rp = new Reports(type, month, total);
                 aReport.add(rp);
             }

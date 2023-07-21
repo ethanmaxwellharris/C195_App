@@ -50,12 +50,10 @@ public class ReportsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Reports screen has been initialized");
-
         reportATypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         reportAMonthCol.setCellValueFactory(new PropertyValueFactory<>("month"));
         reportAAmountCol.setCellValueFactory(new PropertyValueFactory<>("total"));
         reportATableView.setItems(DBReports.getReportA());
-
         reportBContactCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         reportBTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         reportBDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -65,7 +63,6 @@ public class ReportsController implements Initializable {
         reportBEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         reportBCustomerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         reportBTableView.setItems(DBReports.getReportB());
-        
         reportCCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         reportCNCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         reportCDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
