@@ -35,45 +35,22 @@ public class AddAppointmentController implements Initializable {
     public ComboBox apptStartTimeComboBox;
     public DatePicker apptStartDatePicker;
     private final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("Planning Session", "De-Briefing", "Execution", "Monitor & Control");
+    private static final int maxTextLength = 50;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add appointments screen initialized");
-
-//        Method 1: Populate with DBAppointment data -- Currently Working
-//        ObservableList<Appointments> type = DBAppointments.getAllAppointments();
-//        apptTypeComboBox.setItems(type);
-        apptTypeComboBox.setPromptText("Select a Type");
-
-
-        //Method 2: Pre-fill with additional selections
-//        ObservableList<Appointments> appointmentTypes = FXCollections.observableArrayList();
-//        for (Appointments appointment : DBAppointments.getAllAppointments()) {
-//            String type = appointment.getType();
-//            if (type != null && !type.isEmpty() && !appointmentTypes.contains(type)) {
-//                appointmentTypes.add(type);
-//            }
-//        }
-//        appointmentTypes.addAll("Strategy Meeting", "Review Session");
-//
-//        apptTypeComboBox.setItems(appointmentTypes);
-
-        //Method 3
         apptTypeComboBox.setItems(appointmentTypes);
-
+        apptTypeComboBox.setPromptText("Select a Type");
         ObservableList<Users> users = DBUsers.getAllUsers();
         userIdComboBox.setItems(users);
-        //userIdComboBox.getSelectionModel().selectFirst();
         userIdComboBox.setPromptText("Select a User ID");
-
         ObservableList<Customers> customers = DBCustomers.getAllCustomers();
         custIdComboBox.setItems(customers);
         custIdComboBox.setPromptText("Select a Customer ID");
-
         ObservableList<Contacts> contacts = DBContacts.getAllContacts();
         contactIdComboBox.setItems(contacts);
         contactIdComboBox.setPromptText("Select a Contact ID");
-
         apptStartDatePicker.setValue(LocalDate.now());
         apptEndDatePicker.setValue(LocalDate.now());
 
@@ -104,19 +81,66 @@ public class AddAppointmentController implements Initializable {
             int customerId = custIdComboBox.getSelectionModel().getSelectedItem().getCustomerId();
             int userId = userIdComboBox.getSelectionModel().getSelectedItem().getUserId();
             int contactId = contactIdComboBox.getSelectionModel().getSelectedItem().getContactId();
-        if(title.isBlank()){
+
+            for (Appointment a : DBAppointments.getAllAppointments()) {
+                LocalDateTime appointmentStartTime = a.getStart();
+                LocalDateTime appointmentEndTime = a.getEnd();
+                if (a.getCustomer_ID() == custIdComboBox.getValue().getCustomer_ID()) {
+                    if (start.isBefore(appointmentStartTime) && end.isAfter(appointmentEndTime)){
+                        Alert ("OVERLAPPING APPOINTMENT", "THIS APPOINTMENT OVERLAPS A PREEXISTING APPOINTMENT");
+                        return;
+                    }
+                    if ((start.isAfter(appointmentStartTime) || start.isEqual(appointmentStartTime)) && start.isBefore(appointmentEndTime)) {
+                        Alert ("OVERLAPPING START TIME", "THIS APPOINTMENT'S START TIME OVERLAPS A PREEXISTING APPOINTMENT");
+                        return;
+                    }
+                    if ((end.isBefore(appointmentEndTime) || end.isEqual(appointmentEndTime)) && end.isAfter(appointmentStartTime)){
+                        Alert ("OVERLAPPING END TIME", "THIS APPOINTMENT'S END TIME OVERLAPS A PREEXISTING APPOINTMENT");
+                        return;
+                    }
+                }
+            }
+
+        if(apptTitleTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Title cannot be left blank.");
             alert.showAndWait();
-        }else if (description.isBlank()) {
+        }else if(apptTitleTextField.getText().length() > maxTextLength) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Title must be " + maxTextLength + " characters or less. The current length is " + apptTitleTextField.getText().length());
+            alert.setTitle("Excessive characters in Title!");
+            alert.showAndWait();
+        }else if (apptDescriptionTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Description cannot be left blank.");
             alert.showAndWait();
-        }else if (location.isBlank()) {
+        }else if(apptDescriptionTextField.getText().length() > maxTextLength) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Description must be " + maxTextLength + " characters or less. The current length is " + apptDescriptionTextField.getText().length());
+            alert.setTitle("Excessive characters in Description!");
+            alert.showAndWait();
+        }else if (apptLocationTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Location cannot be left blank.");
             alert.showAndWait();
-        }else if (type == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Type cannot be left blank.");
-                alert.showAndWait();
-        }else {
+        }else if(apptLocationTextField.getText().length() > maxTextLength){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Location must be " + maxTextLength + " characters or less. The current length is " + apptLocationTextField.getText().length());
+            alert.setTitle("Excessive characters in Location!");
+            alert.showAndWait();
+        }else if(start.isAfter(end)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Start time cannot be after the end time.");
+            alert.showAndWait();
+        }else if(end.isBefore(start)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "End time cannot be before the start time.");
+            alert.showAndWait();
+        }else if(stDate.isAfter(endDate)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Start date cannot be after the end date.");
+            alert.showAndWait();
+        }else if(endDate.isBefore(stDate)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "End date cannot be after the start date.");
+            alert.showAndWait();
+        }
+
+            /*else if (DBAppointments.checkAppointmentOverlap(customerId, start, end)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment time overlaps with an existing appointment for the same customer.");
+            alert.showAndWait();
+        }*/
+            else {
             DBAppointments.addAppointment(title, description, location, type, start, end, customerId, userId, contactId);
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));

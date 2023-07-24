@@ -98,6 +98,22 @@ public class DBAppointments {
         return wList;
     }
 
+    public static boolean checkAppointmentOverlap(int customerId, LocalDateTime start, LocalDateTime end) throws SQLException {
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = ?;";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            LocalDateTime existingStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime existingEnd = rs.getTimestamp("End").toLocalDateTime();
+            if ((start.isAfter(existingStart.minusMinutes(1)) && start.isBefore(existingEnd.plusMinutes(1))) ||
+                    (end.isAfter(existingStart.minusMinutes(1)) && end.isBefore(existingEnd.plusMinutes(1))) ||
+                    (start.isBefore(existingStart.plusMinutes(1)) && end.isAfter(existingEnd.minusMinutes(1)))) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     public static ObservableList<Appointments> getAppointmentTypes() {
         ObservableList<Appointments> typeList = FXCollections.observableArrayList();
         String sql = "SELECT DISTINCT appointments.type FROM client_schedule.appointments;";

@@ -31,6 +31,8 @@ public class AddCustomerController implements Initializable {
     public ComboBox<FirstLevelDivisions> customerDivisionComboBox;
     public Button saveCustomerButton;
     public Button cancelCustomerButton;
+    private static final int maxTextLength50 = 50;
+    private static final int maxTextLength100 = 100;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,11 +49,35 @@ public class AddCustomerController implements Initializable {
             String postalCode = customerPostalTextField.getText();
             String phoneNumber = customerPhoneTextField.getText();
             int divisionId = customerDivisionComboBox.getSelectionModel().getSelectedItem().getDivision_id();
-            if (customerName.isBlank() || address.isBlank() || postalCode.isBlank() || phoneNumber.isBlank()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not filled all forms.");
-                alert.setTitle("No Form Can be Left Blank");
+            if (customerNameTextField.getText().length() > maxTextLength50){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Name must be " + maxTextLength50 + " characters or less. The current length is " + customerNameTextField.getText().length());
+                alert.setTitle("Excessive characters in name field!");
                 alert.showAndWait();
-            } else {
+            }else if(customerNameTextField.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Description cannot be left blank.");
+                alert.showAndWait();
+            }else if (customerPhoneTextField.getText().length() > maxTextLength50){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Phone number must be " + maxTextLength50 + " characters or less. The current length is " + customerPhoneTextField.getText().length());
+                alert.setTitle("Excessive characters in phone field!");
+                alert.showAndWait();
+            }else if(customerPhoneTextField.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Phone number cannot be left blank.");
+                alert.showAndWait();
+            }else if(customerAddressTextField.getText().length() > maxTextLength100){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Address must be " + maxTextLength100 + " characters or less. The current length is " + customerAddressTextField.getText().length());
+                alert.setTitle("Excessive characters in address field!");
+                alert.showAndWait();
+            }else if(customerAddressTextField.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Address cannot be left blank.");
+                alert.showAndWait();
+            }else if (customerPostalTextField.getText().length() > maxTextLength50){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Postal code must be " + maxTextLength50 + " characters or less. The current length is " + customerPostalTextField.getText().length());
+                alert.setTitle("Excessive characters in postal field!");
+                alert.showAndWait();
+            }else if(customerPostalTextField.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Postal code cannot be left blank.");
+                alert.showAndWait();
+            }else {
                 DBCustomers.addCustomer(customerName, address, postalCode, phoneNumber, divisionId);
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
@@ -62,7 +88,7 @@ public class AddCustomerController implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
-            alert.setContentText("Field(s) must have valid values - try again");
+            alert.setContentText("Drop down menu's cannot be unselected");
             alert.showAndWait();
         }
     }
