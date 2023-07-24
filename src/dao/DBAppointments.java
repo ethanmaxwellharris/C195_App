@@ -44,7 +44,7 @@ public class DBAppointments {
         ObservableList<Appointments> mList = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM client_schedule.appointments WHERE yearweek(start)=yearweek(now());";
+            String sql = "SELECT * FROM client_schedule.appointments WHERE MONTH(Start) = MONTH(CURRENT_DATE()) AND YEAR(Start) = YEAR(CURRENT_DATE());";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -53,9 +53,9 @@ public class DBAppointments {
                 String description = rs.getString("Description");
                 String location = rs.getString("Location");
                 String type = rs.getString("Type");
-                Timestamp start = rs.getTimestamp("Start"); //Pulls the Timestamp value from DB
-                LocalDateTime starting = start.toLocalDateTime(); //Converts timestamp value to LocalDateTime to play nice
-                Timestamp end = rs.getTimestamp("End"); //Does same as above
+                Timestamp start = rs.getTimestamp("Start");
+                LocalDateTime starting = start.toLocalDateTime();
+                Timestamp end = rs.getTimestamp("End");
                 LocalDateTime ending = end.toLocalDateTime();
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
@@ -73,7 +73,7 @@ public class DBAppointments {
         ObservableList<Appointments> wList = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM appointments WHERE month(start) = month(current_date()) AND YEAR(start) = YEAR(current_date());";
+            String sql = "SELECT * FROM client_schedule.appointments WHERE YEARWEEK(Start) = YEARWEEK(CURRENT_DATE()) AND MONTH(Start) = MONTH(CURRENT_DATE());";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -177,16 +177,4 @@ public class DBAppointments {
         }
     }
 
-//    public static void deleteCustomerAppointment(int customerId) {
-//        try {
-//            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
-//            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-//            ps.setInt(1, customerId);
-//            ps.executeUpdate();
-//        } catch (SQLException x) {
-//            x.printStackTrace();
-//        }
-//    }
-
-    //method to delete customers associated appointments and then the customer can be deleted
 }

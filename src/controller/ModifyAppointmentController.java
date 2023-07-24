@@ -42,6 +42,38 @@ public class ModifyAppointmentController implements Initializable {
     @FXML public ComboBox apptEndTimeComboBox;
     @FXML public DatePicker apptStartDatePicker;
     private final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("Planning Session", "De-Briefing", "Execution", "Monitor & Control");
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
+        apptIdTextField.setText(String.valueOf(selectedModifyAppointment.getAppointmentId()));
+        apptTitleTextField.setText(String.valueOf(selectedModifyAppointment.getTitle()));
+        apptDescriptionTextField.setText(String.valueOf(selectedModifyAppointment.getDescription()));
+        apptLocationTextField.setText(String.valueOf(selectedModifyAppointment.getLocation()));
+        apptTypeComboBox.setItems(appointmentTypes);
+        apptTypeComboBox.getSelectionModel().select(selectedModifyAppointment.getType());
+        apptStartDatePicker.setValue(selectedModifyAppointment.getStart().toLocalDate());
+        apptStartTimeComboBox.setValue(selectedModifyAppointment.getStart().toLocalTime());
+        apptEndDatePicker.setValue(selectedModifyAppointment.getStart().toLocalDate());
+        apptEndTimeComboBox.setValue(selectedModifyAppointment.getStart().toLocalTime());
+        custIdComboBox.setItems(DBCustomers.getAllCustomers());
+        for (Customers customer: DBCustomers.getAllCustomers()) {
+            if(customer.getCustomerId() == selectedModifyAppointment.getCustomerId()) {
+                custIdComboBox.setValue(customer);
+            }
+        }
+        userIdComboBox.setItems(DBUsers.getAllUsers());
+        for (Users user: DBUsers.getAllUsers()) {
+            if(user.getUserId() == selectedModifyAppointment.getUserId()) {
+                userIdComboBox.setValue(user);
+            }
+        }
+        contactIdComboBox.setItems(DBContacts.getAllContacts());
+        for (Contacts contact: DBContacts.getAllContacts()) {
+            if(contact.getContactId() == selectedModifyAppointment.getContactId()) {
+                contactIdComboBox.setValue(contact);
+            }
+        }
+    }
 
     public void saveAppointmentOnAction(ActionEvent actionEvent) {
     }
@@ -52,32 +84,5 @@ public class ModifyAppointmentController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-            Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
-
-            apptIdTextField.setText(String.valueOf(selectedModifyAppointment.getCustomerId()));
-            apptTitleTextField.setText(String.valueOf(selectedModifyAppointment.getTitle()));
-            apptDescriptionTextField.setText(String.valueOf(selectedModifyAppointment.getDescription()));
-            apptLocationTextField.setText(String.valueOf(selectedModifyAppointment.getLocation()));
-            apptTypeComboBox.setItems(appointmentTypes);
-            apptTypeComboBox.getSelectionModel().select(selectedModifyAppointment.getType());
-            apptStartDatePicker.setValue(selectedModifyAppointment.getStart().toLocalDate());
-            apptStartTimeComboBox.setValue(selectedModifyAppointment.getStart().toLocalTime());
-            apptEndDatePicker.setValue(selectedModifyAppointment.getStart().toLocalDate());
-            apptEndTimeComboBox.setValue(selectedModifyAppointment.getStart().toLocalTime());
-
-            custIdComboBox.setItems(DBCustomers.getAllCustomers());
-            custIdComboBox.getSelectionModel().select(selectedModifyAppointment.getCustomerId());
-
-            userIdComboBox.setItems(DBUsers.getAllUsers());
-            userIdComboBox.getSelectionModel().select(selectedModifyAppointment.getUserId());
-            contactIdComboBox.setItems(DBContacts.getAllContacts());
-            contactIdComboBox.getSelectionModel().select(selectedModifyAppointment.getContactId());
-
-            //contactIdComboBox.getItems().setAll(DBContacts.getAllContacts());
-            //contactIdComboBox.getSelectionModel().select(selectedModifyAppointment.getContactId());
     }
 }

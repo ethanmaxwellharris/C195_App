@@ -92,6 +92,7 @@ public class MainScreenController implements Initializable {
             }
         });
 
+        //Lambda #2
         viewToggleGroup.selectedToggleProperty().addListener(
                 (observable, oldSelection, newSelection) -> {
             if (newSelection == allViewRadio) {

@@ -43,7 +43,7 @@ public class AddAppointmentController implements Initializable {
 //        Method 1: Populate with DBAppointment data -- Currently Working
 //        ObservableList<Appointments> type = DBAppointments.getAllAppointments();
 //        apptTypeComboBox.setItems(type);
-//        apptTypeComboBox.setPromptText("Select a Type");
+        apptTypeComboBox.setPromptText("Select a Type");
 
 
         //Method 2: Pre-fill with additional selections
