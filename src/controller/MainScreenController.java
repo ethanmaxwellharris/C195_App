@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -95,17 +97,38 @@ public class MainScreenController implements Initializable {
         //Lambda #2
         viewToggleGroup.selectedToggleProperty().addListener(
                 (observable, oldSelection, newSelection) -> {
-            if (newSelection == allViewRadio) {
-                appointmentsTableView.setItems(DBAppointments.getAllAppointments());
-            } else if (newSelection == monthViewRadio) {
-                appointmentsTableView.setItems(DBAppointments.getMonthAppointments());
-            } else if (newSelection == weekViewRadio) {
-                appointmentsTableView.setItems(DBAppointments.getWeekAppointments());
-            }
-        });
-    }
+                    if (newSelection == allViewRadio) {
+                        appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+                    } else if (newSelection == monthViewRadio) {
+                        appointmentsTableView.setItems(DBAppointments.getMonthAppointments());
+                    } else if (newSelection == weekViewRadio) {
+                        appointmentsTableView.setItems(DBAppointments.getWeekAppointments());
+                    }
+                });
 
-    public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
+        //Appointment in 15 Minutes
+        //Appointments appointment = (Appointments) DBAppointments.getAppointmentsIn15();
+//        try() {
+//            LocalTime startTime = LocalTime.of(9, 10);
+//            LocalTime currentTime = LocalTime.now();
+//            long timeDifference = ChronoUnit.MINUTES.between(startTime, currentTime);
+//            long cleanedTime = (timeDifference + -1) * -1;
+//
+//            if (cleanedTime > 1 && cleanedTime <= 15) {
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment in " + cleanedTime + " minutes.");
+//                alert.setTitle("Appointment Coming Up");
+//                alert.show();
+//            } else if (cleanedTime == 1) {
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment in " + cleanedTime + " minute");
+//                alert.setTitle("Appointment Coming Up VERY SOON");
+//                alert.show();
+            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("The add customer button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();

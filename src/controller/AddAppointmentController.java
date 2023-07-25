@@ -53,7 +53,6 @@ public class AddAppointmentController implements Initializable {
         contactIdComboBox.setPromptText("Select a Contact ID");
         apptStartDatePicker.setValue(LocalDate.now());
         apptEndDatePicker.setValue(LocalDate.now());
-
         LocalTime start = LocalTime.of(8, 0);
         LocalTime end = LocalTime.of(17,30);
         while(start.isBefore(end.plusSeconds(1))){
@@ -61,8 +60,8 @@ public class AddAppointmentController implements Initializable {
             apptEndTimeComboBox.getItems().add(start);
             start = start.plusMinutes(30);
         }
-        apptStartTimeComboBox.getSelectionModel().select(LocalTime.of(8,0)); //Change this to the time restriction of 8:00AM - 10:00PM EST
-        apptEndTimeComboBox.getSelectionModel().select(LocalTime.of(8,0)); //Change this to the time restriction of 8:00AM - 10:00PM EST
+        apptStartTimeComboBox.getSelectionModel().select(LocalTime.of(8,0));
+        apptEndTimeComboBox.getSelectionModel().select(LocalTime.of(8,0));
     }
 
 
@@ -82,26 +81,33 @@ public class AddAppointmentController implements Initializable {
             int userId = userIdComboBox.getSelectionModel().getSelectedItem().getUserId();
             int contactId = contactIdComboBox.getSelectionModel().getSelectedItem().getContactId();
 
-            for (Appointment a : DBAppointments.getAllAppointments()) {
-                LocalDateTime appointmentStartTime = a.getStart();
-                LocalDateTime appointmentEndTime = a.getEnd();
-                if (a.getCustomer_ID() == custIdComboBox.getValue().getCustomer_ID()) {
-                    if (start.isBefore(appointmentStartTime) && end.isAfter(appointmentEndTime)){
-                        Alert ("OVERLAPPING APPOINTMENT", "THIS APPOINTMENT OVERLAPS A PREEXISTING APPOINTMENT");
-                        return;
-                    }
-                    if ((start.isAfter(appointmentStartTime) || start.isEqual(appointmentStartTime)) && start.isBefore(appointmentEndTime)) {
-                        Alert ("OVERLAPPING START TIME", "THIS APPOINTMENT'S START TIME OVERLAPS A PREEXISTING APPOINTMENT");
-                        return;
-                    }
-                    if ((end.isBefore(appointmentEndTime) || end.isEqual(appointmentEndTime)) && end.isAfter(appointmentStartTime)){
-                        Alert ("OVERLAPPING END TIME", "THIS APPOINTMENT'S END TIME OVERLAPS A PREEXISTING APPOINTMENT");
-                        return;
+                for (Appointments a : DBAppointments.getAllAppointments()) {
+                    LocalDateTime appointmentStartTime = a.getStart();
+                    LocalDateTime appointmentEndTime = a.getEnd();
+                    if (a.getCustomerId() == custIdComboBox.getValue().getCustomerId()) {
+                        if ((start.isBefore(appointmentStartTime) || start.isEqual(appointmentStartTime)) && (end.isAfter(appointmentEndTime)|| end.isEqual(appointmentEndTime))){
+                            /*without equal edge cases:start.isBefore(appointmentStartTime) && end.isAfter(appointmentEndTime)*/
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment cannot be saved - there is an overlap with an existing appointment");
+                            alert.setTitle("Appointment Overlap");
+                            alert.showAndWait();
+                            return;
+                        }
+                        else if ((start.isAfter(appointmentStartTime) || start.isEqual(appointmentStartTime)) && start.isBefore(appointmentEndTime)) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment cannot be saved - the start time results in an overlap with an existing appointment");
+                            alert.setTitle("Appointment Start Overlap");
+                            alert.showAndWait();
+                            return;
+                        }
+                        else if ((end.isBefore(appointmentEndTime) || end.isEqual(appointmentEndTime)) && end.isAfter(appointmentStartTime)){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment cannot be saved - the end time results in an overlap with an existing appointment");
+                            alert.setTitle("Appointment End Overlap");
+                            alert.showAndWait();
+                            return;
+                        }
                     }
                 }
-            }
 
-        if(apptTitleTextField.getText().isEmpty()) {
+         if(apptTitleTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Title cannot be left blank.");
             alert.showAndWait();
         }else if(apptTitleTextField.getText().length() > maxTextLength) {
@@ -134,13 +140,7 @@ public class AddAppointmentController implements Initializable {
         }else if(endDate.isBefore(stDate)) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "End date cannot be after the start date.");
             alert.showAndWait();
-        }
-
-            /*else if (DBAppointments.checkAppointmentOverlap(customerId, start, end)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment time overlaps with an existing appointment for the same customer.");
-            alert.showAndWait();
-        }*/
-            else {
+        }else {
             DBAppointments.addAppointment(title, description, location, type, start, end, customerId, userId, contactId);
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));

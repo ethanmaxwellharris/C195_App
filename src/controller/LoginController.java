@@ -42,26 +42,20 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle lang) {
         System.out.println("Login is Initialized!");
-
-        //Language
-//        Locale locale = Locale.getDefault();
-//        Locale.setDefault(locale);
+//        try{
 //        ZoneId zoneId = ZoneId.systemDefault();
-
-//        try {
-//            lang = ResourceBundle.getBundle("Lang_es_ES.properties", Locale.getDefault());
-//            userLocationLabel2.setText(String.valueOf(zoneId));
-//            welcomeBackLabel.setText(lang.getString("Welcome Back"));
-//            welcomeBackSubTextLabel.setText(lang.getString("Sign in to continue"));
-//            usernameLabel.setText(lang.getString("Username"));
-//            passwordLabel.setText(lang.getString("Password"));
-//        } catch (Exception e) {
+//        userLocationLabel2.setText(zoneId.toString());
+//
+//        ResourceBundle rb = ResourceBundle.getBundle("Lang_en_US.properties", Locale.getDefault());
+//            userLocationLabel2.setText(rb.getString("America/Denver"));
+//            welcomeBackLabel.setText(rb.getString("Welcome Back"));
+//            welcomeBackSubTextLabel.setText(rb.getString("Sign in to continue"));
+//            usernameLabel.setText(rb.getString("Username"));
+//            passwordLabel.setText(rb.getString("Password"));
+//        }catch(Exception e) {
 //            e.printStackTrace();
+//            System.out.println(e + " is missing");
 //        }
-
-
-        //15 Minute Alert
-        //{code}
     }
 
     @FXML
