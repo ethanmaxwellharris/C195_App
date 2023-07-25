@@ -221,6 +221,8 @@ public class MainScreenController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 DBAppointments.deleteAppointment(selectedAppointment.getAppointmentId());
                 appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+                Alert newAlert = new Alert(Alert.AlertType.CONFIRMATION, "Appointment ID " + selectedAppointment.getAppointmentId() + " which had a type of " + selectedAppointment.getType() + " has been deleted successfully.");
+                newAlert.show();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have not select an appointment to delete yet.");
