@@ -80,10 +80,13 @@
       </Separator>
       <Button layoutX="971.0" layoutY="501.0" mnemonicParsing="false" onAction="#onActionReports" text="Reports" />
       <Button fx:id="userLogButton" layoutX="971.0" layoutY="466.0" mnemonicParsing="false" onAction="#onActionUserLog" text="User Log" />
-      <Label fx:id="lambdaLabel" alignment="TOP_LEFT" layoutX="425.0" layoutY="274.0" opacity="0.8" prefHeight="53.0" prefWidth="377.0" text="Label" wrapText="true">
+      <Label fx:id="lambdaLabel" alignment="TOP_LEFT" layoutX="425.0" layoutY="274.0" opacity="0.8" prefHeight="53.0" prefWidth="446.0" text="Label" textAlignment="JUSTIFY" wrapText="true">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <font>
+            <Font size="14.0" />
+         </font>
       </Label>
    </children>
 </AnchorPane>

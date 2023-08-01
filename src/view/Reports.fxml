@@ -43,7 +43,7 @@
         <columns>
           <TableColumn fx:id="reportATypeCol" prefWidth="139.0" text="Type" />
           <TableColumn fx:id="reportAMonthCol" prefWidth="132.0" text="Month" />
-            <TableColumn fx:id="reportAAmountCol" prefWidth="99.0" text="Amount" />
+            <TableColumn fx:id="reportAAmountCol" prefWidth="99.0" text="Count" />
         </columns>
       </TableView>
       <TableView fx:id="reportBTableView" layoutX="149.0" layoutY="289.0" prefHeight="182.0" prefWidth="844.0">

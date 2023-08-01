@@ -16,8 +16,10 @@ import model.Customers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -88,8 +90,11 @@ public class MainScreenController implements Initializable {
 
         appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                System.out.println("Appointment Selection Made");
-                lambdaLabel.setText("Appointment Selected");
+                LocalTime startTime = newSelection.getStart().toLocalTime();
+                LocalTime endTime = newSelection.getEnd().toLocalTime();
+                Duration duration = Duration.between(startTime, endTime);
+                String location = newSelection.getLocation();
+                lambdaLabel.setText("Appointment selected for a(n) " + newSelection + " session." + "\n" + "This is scheduled to last " + duration.toMinutes() + " minutes at " + location + ".");
                 //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
             }
         });
@@ -128,7 +133,7 @@ public class MainScreenController implements Initializable {
 //        }
 
 
-        public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
+    public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("The add customer button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -182,8 +187,6 @@ public class MainScreenController implements Initializable {
         return selectedModifyCustomer;
     }
 
-
-
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("The add appointment button has been clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
@@ -234,7 +237,6 @@ public class MainScreenController implements Initializable {
     public static Appointments getModifyAppointment() {
         return selectedModifyApppointment;
     }
-
 
     public void onActionReports(ActionEvent actionEvent) throws IOException {
         System.out.println("The reports button has been clicked!");

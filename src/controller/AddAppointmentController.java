@@ -67,6 +67,9 @@ public class AddAppointmentController implements Initializable {
 
     public void saveAppointmentOnAction(ActionEvent actionEvent) throws IOException {
         try{
+
+
+
             String title = apptTitleTextField.getText();
             String description = apptDescriptionTextField.getText();
             String location = apptLocationTextField.getText();
