@@ -12,17 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Customers;
+import model.TimeZoneConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class MainScreenController implements Initializable {
     public Button addCustomerButton;
@@ -59,11 +58,24 @@ public class MainScreenController implements Initializable {
     public TableColumn<Appointments, Integer> apptUserIdCol;
     public static Customers selectedModifyCustomer;
     public static Appointments selectedModifyApppointment;
+    public Label localTimeLabel;
+    public Label estTimeLabel;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
+        // For the local time
+        LocalDateTime localNow = LocalDateTime.now();
+        String formattedLocalTime = localNow.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        localTimeLabel.setText("The local time is: " + formattedLocalTime);
+        // For the time in EST
+        ZoneId estZone = ZoneId.of("America/New_York");
+        ZonedDateTime estNow = ZonedDateTime.now(estZone);
+        String formattedEstTime = estNow.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
+        estTimeLabel.setText("The time in EST is: " + formattedEstTime);
+
+        ZoneId zoneId = ZoneId.systemDefault();
 
         custIdCol.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("customerId"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerName"));

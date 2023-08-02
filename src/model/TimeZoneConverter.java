@@ -5,7 +5,9 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class TimeZoneConverter {
-        // Convert UTC LocalDateTime to Local timezone LocalDateTime
+    public static String convertSystemToUtc;
+
+    // Convert UTC LocalDateTime to Local timezone LocalDateTime
         public static LocalDateTime convertUtcToLocal(LocalDateTime utcDateTime, ZoneId localZone) {
             ZonedDateTime zonedDateTime = utcDateTime.atZone(ZoneId.of("UTC"));
             ZonedDateTime localZonedDateTime = zonedDateTime.withZoneSameInstant(localZone);
@@ -39,17 +41,17 @@ public class TimeZoneConverter {
             return convertUtcToLocal(utcDateTime, ZoneId.systemDefault());
         }
 
-            // Test the methods
-            LocalDateTime utcDateTime = LocalDateTime.now(ZoneId.of("UTC"));
-            //System.out.println("UTC DateTime: " + utcDateTime);
 
-            LocalDateTime localDateTime = convertUtcToLocal(utcDateTime, ZoneId.of("America/New_York"));
-            //System.out.println("Local DateTime: " + localDateTime);
+/* Alternative Methods
+        public static ZonedDateTime convertToUserTimeZone(LocalDateTime dateTime) {
+            ZoneId userTimeZone = ZoneId.systemDefault();
+            return ZonedDateTime.of(dateTime, userTimeZone);
+        }
 
-            LocalDateTime easternDateTime = convertUtcToEastern(utcDateTime);
-            //S//ystem.out.println("Eastern DateTime: " + easternDateTime);
+        public static LocalDateTime convertToUTC(ZonedDateTime zonedDateTime) {
+            return zonedDateTime.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        }*/
 
-            LocalDateTime systemDateTime = convertUtcToSystem(utcDateTime);
-            //System.out.println("System Default DateTime: " + systemDateTime);
+
 
 }

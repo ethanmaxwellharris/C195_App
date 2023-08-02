@@ -18,13 +18,11 @@ import javax.naming.spi.ResolveResult;
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class LoginController implements Initializable {
     public Label welcomeBackLabel;
@@ -43,8 +41,8 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle lang) {
         System.out.println("Login is Initialized!");
 //        try{
-//        ZoneId zoneId = ZoneId.systemDefault();
-//        userLocationLabel2.setText(zoneId.toString());
+        ZoneId zoneId = ZoneId.systemDefault();
+        userLocationLabel2.setText(zoneId.toString());
 //
 //        ResourceBundle rb = ResourceBundle.getBundle("Lang_en_US.properties", Locale.getDefault());
 //            userLocationLabel2.setText(rb.getString("America/Denver"));

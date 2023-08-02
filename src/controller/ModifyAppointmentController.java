@@ -13,16 +13,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Appointments;
-import model.Contacts;
-import model.Customers;
-import model.Users;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,11 +41,22 @@ public class ModifyAppointmentController implements Initializable {
     private final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("Planning Session", "De-Briefing", "Execution", "Monitor & Control");
     private final ObservableList<String> appointmentTimes = FXCollections.observableArrayList("8:00", "8:30", "");
     private static final int maxTextLength = 50;
+    public Label timeNotice;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
+        ZoneId estZone = ZoneId.of("America/New_York");
+        ZonedDateTime estNow = ZonedDateTime.now(estZone);
+        LocalTime currentTimeInEST = estNow.toLocalTime();
+        LocalTime latestAllowableTimeInEST = LocalTime.of(22, 0);
+        ZoneId userZone = ZoneId.systemDefault();
+        ZonedDateTime latestAllowableTimeInUserZone = estNow.toLocalDate().atTime(latestAllowableTimeInEST).atZone(estZone).withZoneSameInstant(userZone);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        timeNotice.setText("The current time at HQ is " +  currentTimeInEST.format(timeFormatter) + " EST." + "\n" + "The latest you can schedule an appointment is " + latestAllowableTimeInEST.format(timeFormatter) + " EST or " + latestAllowableTimeInUserZone.format(timeFormatter) + " your time.");
 
+
+
+        Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
         apptIdTextField.setText(String.valueOf(selectedModifyAppointment.getAppointmentId()));
         apptTitleTextField.setText(String.valueOf(selectedModifyAppointment.getTitle()));
         apptDescriptionTextField.setText(String.valueOf(selectedModifyAppointment.getDescription()));
@@ -100,6 +107,24 @@ public class ModifyAppointmentController implements Initializable {
             int customerId = custIdComboBox.getSelectionModel().getSelectedItem().getCustomerId();
             int userId = userIdComboBox.getSelectionModel().getSelectedItem().getUserId();
             int contactId = contactIdComboBox.getSelectionModel().getSelectedItem().getContactId();
+
+            ZoneId zoneEST = ZoneId.of("America/New_York");
+            LocalTime open = LocalTime.of(8, 0);
+            LocalTime close = LocalTime.of(22, 0);
+            ZonedDateTime zonedStart = ZonedDateTime.of(start, ZoneId.systemDefault());
+            ZonedDateTime zonedEnd = ZonedDateTime.of(end, ZoneId.systemDefault());
+            ZonedDateTime startEST = zonedStart.withZoneSameInstant(zoneEST);
+            ZonedDateTime endEST = zonedEnd.withZoneSameInstant(zoneEST);
+            LocalTime openEST = startEST.toLocalTime();
+            LocalTime closeEST = endEST.toLocalTime();
+
+            if (openEST.isBefore(open) || openEST.isAfter(close) || closeEST.isBefore(open) || closeEST.isAfter(close)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment cannot be saved - appointment is outside EST business hours");
+                alert.setTitle("Appointment Outside EST Business Hours");
+                alert.showAndWait();
+                return;
+            }
+
             for (Appointments a : DBAppointments.getAllAppointments()) {
                 LocalDateTime appointmentStartTime = a.getStart();
                 LocalDateTime appointmentEndTime = a.getEnd();
@@ -176,7 +201,7 @@ public class ModifyAppointmentController implements Initializable {
     private List<LocalTime> createTimeOptions() {
         List<LocalTime> timeOptions = new ArrayList<>();
         LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(17, 30);
+        LocalTime end = LocalTime.of(22, 0);
 
         while (start.isBefore(end.plusSeconds(1))) {
             timeOptions.add(start);
