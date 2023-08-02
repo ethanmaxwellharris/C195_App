@@ -2,6 +2,7 @@ package controller;
 
 import dao.DBAppointments;
 import dao.DBCustomers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,16 +13,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Customers;
-import model.TimeZoneConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 public class MainScreenController implements Initializable {
     public Button addCustomerButton;
@@ -65,11 +66,10 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
-        // For the local time
+
         LocalDateTime localNow = LocalDateTime.now();
         String formattedLocalTime = localNow.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         localTimeLabel.setText("The local time is: " + formattedLocalTime);
-        // For the time in EST
         ZoneId estZone = ZoneId.of("America/New_York");
         ZonedDateTime estNow = ZonedDateTime.now(estZone);
         String formattedEstTime = estNow.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
@@ -97,9 +97,8 @@ public class MainScreenController implements Initializable {
         appointmentsTableView.setItems(DBAppointments.getAllAppointments());
 
 
-        //Lambda for label generation
+        //Lambda #1 Label Generation
         lambdaLabel.setText("Select an Appointment");
-
         appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 LocalTime startTime = newSelection.getStart().toLocalTime();
@@ -107,7 +106,6 @@ public class MainScreenController implements Initializable {
                 Duration duration = Duration.between(startTime, endTime);
                 String location = newSelection.getLocation();
                 lambdaLabel.setText("Appointment selected for a(n) " + newSelection + " session." + "\n" + "This is scheduled to last " + duration.toMinutes() + " minutes at " + location + ".");
-                //lambdaLabel.setText("Appointment Selected for: " + newAppointment.getAppointmentLambda());
             }
         });
 
@@ -124,25 +122,38 @@ public class MainScreenController implements Initializable {
                 });
 
         //Appointment in 15 Minutes
-        //Appointments appointment = (Appointments) DBAppointments.getAppointmentsIn15();
-//        try() {
-//            LocalTime startTime = LocalTime.of(9, 10);
-//            LocalTime currentTime = LocalTime.now();
-//            long timeDifference = ChronoUnit.MINUTES.between(startTime, currentTime);
-//            long cleanedTime = (timeDifference + -1) * -1;
+        ObservableList<Appointments> soonAppointments = DBAppointments.getAppointmentsIn15();
+        LocalTime currentTime = LocalTime.now();
+        boolean hasUpcomingAppointment = false;
+
+        for (Appointments appointment : soonAppointments) {
+
+            System.out.print(appointment.getAppointmentId() + appointment.getType());
+
+            if (appointment.getStart().isAfter(ChronoLocalDateTime.from(currentTime)) && appointment.getEnd().isBefore(localNow.plusMinutes(15))) {
+                System.out.println("Appointment is within 15 minutes" + "\n" + "");
+            }
 //
-//            if (cleanedTime > 1 && cleanedTime <= 15) {
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment in " + cleanedTime + " minutes.");
+//            LocalDateTime startTime = appointment.getStart();
+//            long timeDifference = ChronoUnit.MINUTES.between(startTime.toLocalTime(), currentTime);
+//
+//            if (timeDifference >= 1 && timeDifference <= 15) {
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+//                        "You have an appointment in " + timeDifference + " minutes.\n"
+//                                + "The ID is: " + appointment.getAppointmentId() + " at " + startTime + ".");
 //                alert.setTitle("Appointment Coming Up");
 //                alert.show();
-//            } else if (cleanedTime == 1) {
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment in " + cleanedTime + " minute");
-//                alert.setTitle("Appointment Coming Up VERY SOON");
+//                hasUpcomingAppointment = true;
+//            } else if (timeDifference > 15) {
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no appointments within the next 15 minutes");
+//                alert.setTitle("No Upcoming Appointments");
 //                alert.show();
-            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+//            }
+        }
+        }
+
+
+
 
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
@@ -184,6 +195,8 @@ public class MainScreenController implements Initializable {
                     DBCustomers.deleteCustomer(selectedCustomer.getCustomerId());
                     customersTableView.setItems(DBCustomers.getAllCustomers());
                     appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+                    Alert newAlert = new Alert(Alert.AlertType.CONFIRMATION, "Customer " + selectedCustomer.getCustomerName() + " has been deleted successfully.");
+                    newAlert.show();
                 } catch (SQLException x) {
                     x.printStackTrace();
                 }
