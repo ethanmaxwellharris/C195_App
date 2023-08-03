@@ -66,7 +66,7 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Main screen has been initialized");
-
+        /*Setting TimeZone stuff*/
         LocalDateTime localNow = LocalDateTime.now();
         String formattedLocalTime = localNow.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         localTimeLabel.setText("The local time is: " + formattedLocalTime);
@@ -74,9 +74,8 @@ public class MainScreenController implements Initializable {
         ZonedDateTime estNow = ZonedDateTime.now(estZone);
         String formattedEstTime = estNow.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
         estTimeLabel.setText("The time in EST is: " + formattedEstTime);
-
         ZoneId zoneId = ZoneId.systemDefault();
-
+        /*Populating TableViews*/
         custIdCol.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("customerId"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerName"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<Customers, String>("address"));
@@ -96,8 +95,7 @@ public class MainScreenController implements Initializable {
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         appointmentsTableView.setItems(DBAppointments.getAllAppointments());
 
-
-        //Lambda #1 Label Generation
+        /*Lambda #1 Label Generation*/
         lambdaLabel.setText("Select an Appointment");
         appointmentsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -105,52 +103,45 @@ public class MainScreenController implements Initializable {
                 LocalTime endTime = newSelection.getEnd().toLocalTime();
                 Duration duration = Duration.between(startTime, endTime);
                 String location = newSelection.getLocation();
-                lambdaLabel.setText("Appointment selected for a(n) " + newSelection + " session." + "\n" + "This is scheduled to last " + duration.toMinutes() + " minutes at " + location + ".");
+                lambdaLabel.setText("Appointment selected for a(n) " + newSelection + " session."
+                        + "\n"
+                        + "This is scheduled to last " + duration.toMinutes() + " minutes at " + location + ".");
             }
         });
 
-        //Lambda #2
-        viewToggleGroup.selectedToggleProperty().addListener(
-                (observable, oldSelection, newSelection) -> {
-                    if (newSelection == allViewRadio) {
-                        appointmentsTableView.setItems(DBAppointments.getAllAppointments());
-                    } else if (newSelection == monthViewRadio) {
-                        appointmentsTableView.setItems(DBAppointments.getMonthAppointments());
-                    } else if (newSelection == weekViewRadio) {
-                        appointmentsTableView.setItems(DBAppointments.getWeekAppointments());
-                    }
-                });
-
-        //Appointment in 15 Minutes
-        ObservableList<Appointments> soonAppointments = DBAppointments.getAppointmentsIn15();
-        LocalTime currentTime = LocalTime.now();
-        boolean hasUpcomingAppointment = false;
-
-        for (Appointments appointment : soonAppointments) {
-
-            System.out.print(appointment.getAppointmentId() + appointment.getType());
-
-            if (appointment.getStart().isAfter(ChronoLocalDateTime.from(currentTime)) && appointment.getEnd().isBefore(localNow.plusMinutes(15))) {
-                System.out.println("Appointment is within 15 minutes" + "\n" + "");
+        /*Lambda #2*/
+        viewToggleGroup.selectedToggleProperty().addListener((observable, oldSelection, newSelection) -> {
+            if (newSelection == allViewRadio) {
+                appointmentsTableView.setItems(DBAppointments.getAllAppointments());
+            } else if (newSelection == monthViewRadio) {
+                appointmentsTableView.setItems(DBAppointments.getMonthAppointments());
+            } else if (newSelection == weekViewRadio) {
+                appointmentsTableView.setItems(DBAppointments.getWeekAppointments());
             }
-//
-//            LocalDateTime startTime = appointment.getStart();
-//            long timeDifference = ChronoUnit.MINUTES.between(startTime.toLocalTime(), currentTime);
-//
-//            if (timeDifference >= 1 && timeDifference <= 15) {
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION,
-//                        "You have an appointment in " + timeDifference + " minutes.\n"
-//                                + "The ID is: " + appointment.getAppointmentId() + " at " + startTime + ".");
-//                alert.setTitle("Appointment Coming Up");
-//                alert.show();
-//                hasUpcomingAppointment = true;
-//            } else if (timeDifference > 15) {
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no appointments within the next 15 minutes");
-//                alert.setTitle("No Upcoming Appointments");
-//                alert.show();
-//            }
+        });
+
+        /*Appointment in 15 Minutes*/
+        ObservableList<Appointments> soonAppointments = DBAppointments.getAppointmentsIn15();
+        LocalDateTime currentTime = LocalDateTime.now();
+        for (Appointments appointment : soonAppointments) {
+            LocalDateTime startTime = appointment.getStart();
+            LocalDateTime endTime = appointment.getEnd();
+            long timeDifference = ChronoUnit.MINUTES.between(currentTime, startTime); // Calculate time difference in minutes
+            if (timeDifference > 0 && timeDifference <= 15) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        "An appointment is in " + timeDifference + " minutes" + "\n" + "The appointment ID is: " + appointment.getAppointmentId() + " starting at " + startTime);
+                alert.setTitle("Appointment Upcoming");
+                alert.setHeaderText("Heads up!");
+                alert.show();
+            }
         }
+        if (soonAppointments.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no appointments within the next 15 minutes");
+            alert.setTitle("No Upcoming Appointments");
+            alert.setHeaderText("No worries");
+            alert.show();
         }
+    }
 
 
 
