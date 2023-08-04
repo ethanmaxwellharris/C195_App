@@ -1,7 +1,5 @@
 package controller;
 
-import dao.DBAppointments;
-import dao.DBConnection;
 import dao.DBUsers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,18 +10,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Appointments;
 import model.Users;
 
-import javax.naming.spi.ResolveResult;
 import java.io.*;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.TimeZone;
 
 public class LoginController implements Initializable {
     @FXML public Label welcomeBackLabel;
@@ -37,7 +31,6 @@ public class LoginController implements Initializable {
     @FXML public PasswordField passwordPasswordField;
     @FXML public Label userLocationLabel2;
     ResourceBundle rb;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,30 +58,70 @@ public class LoginController implements Initializable {
 
     @FXML
     public void onActionSignIn(ActionEvent actionEvent) throws IOException {
+//        try {
+//            LocalDate nowDate = LocalDate.now();
+//            LocalTime nowTime = LocalTime.now();
+//            LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
+//            File file = new File("activity_log.txt");
+//            Scanner scanner = new Scanner(file);
+//            StringBuilder content = new StringBuilder();
+//            while (scanner.hasNext()) {
+//                content.append(scanner.nextLine()).append("\n");
+//            }
+//            scanner.close();
+//            int existingLoginCount = (int) content.chars().filter(ch -> ch == '\n').count();
+//            String userName = usernameTextField.getText();
+//            String password = passwordPasswordField.getText();
+//
+//            String loginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
+//
+//            FileWriter fw = new FileWriter(file, true);
+//
+//            fw.write(loginAttempt);
+//            fw.flush();
+//            fw.close();
+//        }catch (Exception x) {
+//            x.printStackTrace();
+//        }
+
+
         try {
             LocalDate nowDate = LocalDate.now();
             LocalTime nowTime = LocalTime.now();
             LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
-
             File file = new File("activity_log.txt");
-
             Scanner scanner = new Scanner(file);
             StringBuilder content = new StringBuilder();
             while (scanner.hasNext()) {
                 content.append(scanner.nextLine()).append("\n");
             }
             scanner.close();
-
             int existingLoginCount = (int) content.chars().filter(ch -> ch == '\n').count();
             String userName = usernameTextField.getText();
             String password = passwordPasswordField.getText();
 
-            String loginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
-
+            String successfulLoginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
+            String failedLoginAttempt = "Login Attempt " + (existingLoginCount + 1)  + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
 
             FileWriter fw = new FileWriter(file, true);
+            ObservableList<Users> validUsers = DBUsers.getAllUsers();
+            boolean isUsernameValid = false;
+            boolean isPasswordValid = false;
+            for (Users user : validUsers) {
+                if (userName.equals(user.getUserName())) {
+                    isUsernameValid = true;
+                    if (password.equals(user.getPassword())) {
+                        isPasswordValid = true;
+                    }
+                    break;
+                }
+            }
 
-            fw.write(loginAttempt);
+            if (isUsernameValid && isPasswordValid) {
+                fw.write("Login Successful || " + successfulLoginAttempt);
+            } else {
+                fw.write("Login Failed || " + failedLoginAttempt);
+            }
             fw.flush();
             fw.close();
         }catch (Exception x) {
