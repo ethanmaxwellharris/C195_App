@@ -31,16 +31,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        //ResourceBundle rb = ResourceBundle.getBundle("main/Lang_fr_FR.properties", Locale.getDefault());
-        //if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("es") || Locale.getDefault().getLanguage().equals("pr"))
-        //    System.out.println(rb.getString("hello") + " " + rb.getString("world"));
-        LocalDate nowDate = LocalDate.now();
-        LocalTime nowTime = LocalTime.now();
-        LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
-        System.out.println("Welcome, it's currently " + nowDateTime + " where you're logged in.");
-
-        //Locale.setDefault(new Locale("en"));
-
         DBConnection.openConnection();
         launch(args);
         DBConnection.closeConnection();
