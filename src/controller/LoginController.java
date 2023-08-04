@@ -36,50 +36,35 @@ public class LoginController implements Initializable {
     @FXML public TextField usernameTextField;
     @FXML public PasswordField passwordPasswordField;
     @FXML public Label userLocationLabel2;
+    ResourceBundle rb;
 
 
     @Override
-    public void initialize(URL url, ResourceBundle lang) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Login is Initialized!");
-//        try{
-        ZoneId zoneId = ZoneId.systemDefault();
-        userLocationLabel2.setText(zoneId.toString());
-//
-//        ResourceBundle rb = ResourceBundle.getBundle("Lang_en_US.properties", Locale.getDefault());
-//            userLocationLabel2.setText(rb.getString("America/Denver"));
-//            welcomeBackLabel.setText(rb.getString("Welcome Back"));
-//            welcomeBackSubTextLabel.setText(rb.getString("Sign in to continue"));
-//            usernameLabel.setText(rb.getString("Username"));
-//            passwordLabel.setText(rb.getString("Password"));
-//        }catch(Exception e) {
-//            e.printStackTrace();
-//            System.out.println(e + " is missing");
-//        }
+        userLocationLabel2.setText(String.valueOf(ZoneId.systemDefault()));
+        try{
+        Locale user = Locale.getDefault();
+        if (user.getLanguage().equals("fr")) {
+            rb = ResourceBundle.getBundle("Lang_fr_FR");
+        } else {
+            rb = ResourceBundle.getBundle("Lang_en_EN");
+        }
+            userLocationLabel.setText(rb.getString("label.languagePreferenceLabel"));
+            welcomeBackLabel.setText(rb.getString("label.welcomeBackLabel"));
+            welcomeBackSubTextLabel.setText(rb.getString("label.welcomeBackSubTextLabel"));
+            usernameLabel.setText(rb.getString("label.usernameLabel"));
+            passwordLabel.setText(rb.getString("label.passwordLabel"));
+            signInButtonLabel.setText(rb.getString("button.signInButtonLabel"));
+            exitButton.setText(rb.getString("button.exitButton"));
+
+        }catch(Exception e) {
+            System.out.println(e + " is missing");
+        }
     }
 
     @FXML
     public void onActionSignIn(ActionEvent actionEvent) throws IOException {
-
-//        //ResourceBundle resourceBundle = ResourceBundle.getBundle("src/main/Lang", Locale.getDefault());
-//        String userName = usernameTextField.getText();
-//        String password = passwordPasswordField.getText();
-//        int userId = DBUsers.confirmUser(userName, password);
-        //if (userName && password
-//        if (userId > 0) {
-//            outputFile.println("User " + "'" + userName + "'" + " successfully logged in at: " + nowDateTime + "\n");
-//        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
-//        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-//        Scene scene = new Scene(root);
-//        stage.setTitle("Main Menu");
-//        stage.setScene(scene);
-//        stage.show();
-//        } else if (userId < 0) {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Incorrect Username or Password - please try again.");
-//            outputFile.println("User " + "'" + userName + "'" + " failed logged in at: " + nowDateTime + "\n");
-//        }
-//        outputFile.close();
-//    }\
-
         try {
             LocalDate nowDate = LocalDate.now();
             LocalTime nowTime = LocalTime.now();
@@ -98,7 +83,7 @@ public class LoginController implements Initializable {
             String userName = usernameTextField.getText();
             String password = passwordPasswordField.getText();
 
-            String loginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Login Successful " + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
+            String loginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
 
 
             FileWriter fw = new FileWriter(file, true);
@@ -148,10 +133,6 @@ public class LoginController implements Initializable {
                 return;
             }
             if (isUsernameValid && isPasswordValid) {
-                LocalDate nowDate = LocalDate.now();
-                LocalTime nowTime = LocalTime.now();
-                LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
-                System.out.println("Welcome " + usernameTextField.getText() + "." + "\n" + "It's currently " + nowDateTime + " where you're logged in.");
                 Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -162,8 +143,6 @@ public class LoginController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @FXML
