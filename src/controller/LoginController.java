@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Users;
-
 import java.io.*;
 import java.net.URL;
 import java.time.*;
@@ -19,6 +18,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+/**
+ * Controller class for the login functionality.
+ */
 public class LoginController implements Initializable {
     @FXML public Label welcomeBackLabel;
     @FXML public Label welcomeBackSubTextLabel;
@@ -32,17 +34,23 @@ public class LoginController implements Initializable {
     @FXML public Label userLocationLabel2;
     ResourceBundle rb;
 
+    /**
+     * Initializes the login interface.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Login is Initialized!");
         userLocationLabel2.setText(String.valueOf(ZoneId.systemDefault()));
-        try{
-        Locale user = Locale.getDefault();
-        if (user.getLanguage().equals("fr")) {
-            rb = ResourceBundle.getBundle("Lang_fr_FR");
-        } else {
-            rb = ResourceBundle.getBundle("Lang_en_EN");
-        }
+        try {
+            Locale user = Locale.getDefault();
+            if (user.getLanguage().equals("fr")) {
+                rb = ResourceBundle.getBundle("Lang_fr_FR");
+            } else {
+                rb = ResourceBundle.getBundle("Lang_en_EN");
+            }
             userLocationLabel.setText(rb.getString("label.languagePreferenceLabel"));
             welcomeBackLabel.setText(rb.getString("label.welcomeBackLabel"));
             welcomeBackSubTextLabel.setText(rb.getString("label.welcomeBackSubTextLabel"));
@@ -50,41 +58,20 @@ public class LoginController implements Initializable {
             passwordLabel.setText(rb.getString("label.passwordLabel"));
             signInButtonLabel.setText(rb.getString("button.signInButtonLabel"));
             exitButton.setText(rb.getString("button.exitButton"));
-
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e + " is missing");
         }
     }
 
+    /**
+     * Handles the sign-in action when the sign-in button is clicked.
+     * Validates the user against the DBUser database, appends a message to activity_log.txt
+     *
+     * @param actionEvent The ActionEvent triggered by clicking the sign-in button.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void onActionSignIn(ActionEvent actionEvent) throws IOException {
-//        try {
-//            LocalDate nowDate = LocalDate.now();
-//            LocalTime nowTime = LocalTime.now();
-//            LocalDateTime nowDateTime = LocalDateTime.of(nowDate, nowTime);
-//            File file = new File("activity_log.txt");
-//            Scanner scanner = new Scanner(file);
-//            StringBuilder content = new StringBuilder();
-//            while (scanner.hasNext()) {
-//                content.append(scanner.nextLine()).append("\n");
-//            }
-//            scanner.close();
-//            int existingLoginCount = (int) content.chars().filter(ch -> ch == '\n').count();
-//            String userName = usernameTextField.getText();
-//            String password = passwordPasswordField.getText();
-//
-//            String loginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
-//
-//            FileWriter fw = new FileWriter(file, true);
-//
-//            fw.write(loginAttempt);
-//            fw.flush();
-//            fw.close();
-//        }catch (Exception x) {
-//            x.printStackTrace();
-//        }
-
-
         try {
             LocalDate nowDate = LocalDate.now();
             LocalTime nowTime = LocalTime.now();
@@ -99,10 +86,8 @@ public class LoginController implements Initializable {
             int existingLoginCount = (int) content.chars().filter(ch -> ch == '\n').count();
             String userName = usernameTextField.getText();
             String password = passwordPasswordField.getText();
-
             String successfulLoginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
-            String failedLoginAttempt = "Login Attempt " + (existingLoginCount + 1)  + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
-
+            String failedLoginAttempt = "Login Attempt " + (existingLoginCount + 1) + " || Username: " + userName + " || Password: " + password + " || Timestamp: " + nowDateTime + "\n";
             FileWriter fw = new FileWriter(file, true);
             ObservableList<Users> validUsers = DBUsers.getAllUsers();
             boolean isUsernameValid = false;
@@ -116,7 +101,6 @@ public class LoginController implements Initializable {
                     break;
                 }
             }
-
             if (isUsernameValid && isPasswordValid) {
                 fw.write("Login Successful || " + successfulLoginAttempt);
             } else {
@@ -124,10 +108,9 @@ public class LoginController implements Initializable {
             }
             fw.flush();
             fw.close();
-        }catch (Exception x) {
+        } catch (Exception x) {
             x.printStackTrace();
         }
-
         try {
             ObservableList<Users> validUsers = DBUsers.getAllUsers();
             boolean isUsernameValid = false;
@@ -178,6 +161,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Handles the exit action when the exit button is clicked.
+     *
+     * @param actionEvent The ActionEvent triggered by clicking the exit button.
+     */
     @FXML
     public void onActionExit(ActionEvent actionEvent) {
         System.out.println("Ending Program...");

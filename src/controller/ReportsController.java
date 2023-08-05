@@ -22,6 +22,15 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Reports screen.
+ * The reports page displays three unique reports which pull down data from the database to fulfill each reports intended request.
+ * The controller contains an exit which returns you to the main menu.
+ *
+ * @author Ethan Harris
+ * @version %I%
+ * @since 1.0
+ */
 public class ReportsController implements Initializable {
     @FXML public TableView<Reports> reportATableView;
     @FXML public TableColumn<Reports, Integer> reportAMonthCol;
@@ -46,7 +55,12 @@ public class ReportsController implements Initializable {
             ,"October","November","December");
     private final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("Planning Session", "De-Briefing", "Execution", "Monitor & Control");
 
-
+    /**
+     * Initializes the Reports screen.
+     *
+     * @param url            The URL of the FXML file.
+     * @param resourceBundle The resource bundle containing localized strings.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Reports screen has been initialized");
@@ -69,7 +83,12 @@ public class ReportsController implements Initializable {
         reportCCountryCol.setCellValueFactory(new PropertyValueFactory<>("countryName"));
         reportCTableView.setItems(DBReports.getReportC());
     }
-
+    /**
+     * Handles the cancel action, returning to the main menu.
+     *
+     * @param actionEvent The ActionEvent triggered by clicking the cancel button.
+     * @throws IOException If an I/O error occurs during loading the Main Menu.
+     */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
