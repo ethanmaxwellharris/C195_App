@@ -21,6 +21,14 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This controller class manages the addition of new customer information.
+ * It handles user interactions and inserts customer data into the database.
+ *
+ * @author      Ethan Harris
+ * @version     %I%
+ * @since       1.0
+ */
 public class AddCustomerController implements Initializable {
     public TextField customerIdTextField;
     public TextField customerNameTextField;
@@ -33,7 +41,17 @@ public class AddCustomerController implements Initializable {
     public Button cancelCustomerButton;
     private static final int maxTextLength50 = 50;
     private static final int maxTextLength100 = 100;
-
+    /**
+     * Initializes the "Add Customer" screen.
+     *
+     * This method is automatically called when the "Add Customer" screen is loaded. It performs the following tasks:
+     * - Retrieves a list of countries from the database and populates the customer country combo box.
+     * - Sets a default prompt text for the customer country combo box.
+     * - Sets a default prompt text for the customer division combo box to indicate that a country must be selected first.
+     *
+     * @param url            The URL location of the FXML file.
+     * @param resourceBundle The resources for the FXML file.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Countries> countries = DBCountries.getAllCountries();
@@ -41,7 +59,20 @@ public class AddCustomerController implements Initializable {
         customerCountryComboBox.setPromptText("Select a Country");
         customerDivisionComboBox.setPromptText("Select Country First");
     }
-
+    /**
+     * Handles the "Save" button action for adding a new customer.
+     *
+     * This method is called when the user clicks the "Save" button to add a new customer. It performs the following tasks:
+     * - Retrieves customer data from input fields (name, address, postal code, phone number, division ID).
+     * - Validates input data, checking for character length limits and empty fields.
+     * - Adds the new customer to the database if input data is valid.
+     * - Navigates back to the main menu screen upon successful customer addition.
+     * - Displays relevant alerts for invalid or missing input.
+     *
+     * @param actionEvent The event triggered by clicking the "Save" button.
+     * @throws SQLException If a database access error occurs.
+     * @throws IOException  If an I/O error occurs when loading the main menu screen.
+     */
     public void saveCustomerOnAction(ActionEvent actionEvent) throws SQLException, IOException {
         try {
             String customerName = customerNameTextField.getText();
@@ -92,7 +123,12 @@ public class AddCustomerController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    /**
+     * Handles the "Cancel" button action to go back to the main menu.
+     *
+     * @param actionEvent The action event triggered by the button.
+     * @throws IOException If an I/O error occurs.
+     */
     public void cancelOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
@@ -100,7 +136,12 @@ public class AddCustomerController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * Handles mouse event on the division combo box based on selected country.
+     * Displays division options based on the selected country.
+     *
+     * @param actionEvent The mouse event triggered by the combo box.
+     */
     public void divisionMouseEvent(MouseEvent actionEvent) {
         Countries selectedCountry = customerCountryComboBox.getValue();
         if (selectedCountry != null) {

@@ -17,6 +17,14 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * This controller class manages the addition of new appointments.
+ * It handles user interactions, validation, and inserts appointment data into the database.
+ *
+ * @author      Ethan Harris
+ * @version     %I%
+ * @since       1.0
+ */
 public class AddAppointmentController implements Initializable {
     public TextField apptIdTextField;
     public TextField apptTitleTextField;
@@ -36,7 +44,22 @@ public class AddAppointmentController implements Initializable {
     private final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("Planning Session", "De-Briefing", "Execution", "Monitor & Control");
     private static final int maxTextLength = 50;
 
-
+    /**
+     * Initializes the "Add Appointment" screen.
+     *
+     * This method is automatically called when the "Add Appointment" screen is loaded. It performs the following tasks:
+     * - Displays the current time in the HQ's time zone (EST) and the latest allowable appointment scheduling time in
+     *   both EST and the user's local time zone.
+     * - Populates the appointment type combo box with predefined appointment types.
+     * - Populates the user, customer, and contact combo boxes with data retrieved from the database.
+     * - Sets default prompt texts for the combo boxes.
+     * - Sets the default start and end dates to the current date.
+     * - Populates the start and end time combo boxes with valid appointment times between 8:00 AM and 10:00 PM in both
+     *   the user's local time zone and EST, and sets default selections.
+     *
+     * @param url            The URL location of the FXML file.
+     * @param resourceBundle The resources for the FXML file.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add appointments screen initialized");
@@ -82,7 +105,18 @@ public class AddAppointmentController implements Initializable {
         apptStartTimeComboBox.getSelectionModel().select(LocalTime.of(8, 0));
         apptEndTimeComboBox.getSelectionModel().select(LocalTime.of(8, 0));
     }
-
+    /**
+     * Handles the "Save" button action to add a new appointment.
+     *
+     * This method validates the input fields for the new appointment, including the title, description, location,
+     * type, start and end dates and times, customer and user selections. It ensures that the appointment falls within
+     * business hours and does not overlap with existing appointments for the same customer. If the validation passes,
+     * the new appointment data is inserted into the database. If validation fails, appropriate error messages are shown
+     * to the user through alert dialogs.
+     *
+     * @param actionEvent The action event triggered by the "Save" button.
+     * @throws IOException If an I/O error occurs while navigating to the main menu.
+     */
     public void saveAppointmentOnAction(ActionEvent actionEvent) throws IOException {
         try {
             String title = apptTitleTextField.getText();
@@ -185,7 +219,12 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    /**
+     * Handles the "Cancel" button action to go back to the main menu.
+     *
+     * @param actionEvent The action event triggered by the button.
+     * @throws IOException If an I/O error occurs.
+     */
     public void cancelOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));

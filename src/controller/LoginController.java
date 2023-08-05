@@ -19,7 +19,15 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
- * Controller class for the login functionality.
+ * The controller class for the login interface.
+ *
+ * This class handles user interactions and authentication for the login interface.
+ * It manages the user's sign-in attempt, validates credentials, logs activity, and
+ * controls navigation to the main menu or exiting the application.
+ *
+ * @author      Ethan Harris
+ * @version     %I%
+ * @since       1.0
  */
 public class LoginController implements Initializable {
     @FXML public Label welcomeBackLabel;
@@ -37,7 +45,10 @@ public class LoginController implements Initializable {
     /**
      * Initializes the login interface.
      *
-     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * This method is invoked when the Login interface is loaded. It sets up the user interface,
+     * localizes text, and prepares resource bundles based on user language preferences.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
@@ -163,6 +174,8 @@ public class LoginController implements Initializable {
 
     /**
      * Handles the exit action when the exit button is clicked.
+     *
+     * This method displays a thank-you message and exits the application when the exit button is clicked.
      *
      * @param actionEvent The ActionEvent triggered by clicking the exit button.
      */

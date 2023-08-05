@@ -23,6 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * This controller class manages the modification of appointment information.
+ * It handles user interactions and updates appointment data accordingly.
+ *
+ * @author      Ethan Harris
+ * @version     %I%
+ * @since       1.0
+ */
 public class ModifyAppointmentController implements Initializable {
     @FXML public TextField apptIdTextField;
     @FXML public TextField apptTitleTextField;
@@ -42,6 +50,24 @@ public class ModifyAppointmentController implements Initializable {
     private static final int maxTextLength = 50;
     public Label timeNotice;
 
+    /**
+     * Initializes the ModifyAppointment screen with pre-existing data for modification.
+     *
+     * This method is called when the modify Appointment screen is initialized for modifying an existing appointment.
+     * It performs the following tasks:
+     * - Retrieves the system's current time in the America/New_York (EST) time zone.
+     * - Calculates the latest allowable time for scheduling an appointment.
+     * - Formats and displays the current time in EST and the latest allowable scheduling time in the user's time zone.
+     * - Retrieves the appointment to be modified from the MainScreenController.
+     * - Populates input fields and selection boxes with data from the selected appointment.
+     * - Populates the appointment type selection box with available appointment types.
+     * - Sets default values for date and time selection boxes based on the selected appointment's start and end times.
+     * - Populates user, customer, and contact selection boxes with data from the database.
+     * - Sets the selection of user, customer, and contact based on the selected appointment's data.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ZoneId estZone = ZoneId.of("America/New_York");
@@ -87,7 +113,20 @@ public class ModifyAppointmentController implements Initializable {
             }
         }
     }
-
+    /**
+     * Handles the save action for modifying an existing appointment.
+     *
+     * This method is called when the user clicks the "Save" button to modify an existing appointment.
+     * It performs the following tasks:
+     * - Retrieves and validates input data including appointment ID, title, description, location, type, start and end times, customer, user, and contact.
+     * - Checks if the appointment's start and end times fall within EST business hours.
+     * - Checks for any overlapping appointments and displays an alert if overlaps are detected.
+     * - Validates input data for length and empty fields, showing corresponding alerts if necessary.
+     * - Calls the DBAppointments.modifyAppointment() method to update the appointment in the database.
+     * - Navigates back to the main menu screen upon successful modification.
+     *
+     * @param actionEvent The event triggered by clicking the "Save" button.
+     */
     public void saveAppointmentOnAction(ActionEvent actionEvent) {
         try{
             Integer id = Integer.parseInt(apptIdTextField.getText());
@@ -196,7 +235,11 @@ public class ModifyAppointmentController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    /**
+     * Creates a list of time options for the appointment start and end times.
+     *
+     * @return A list of LocalTime objects representing available time options.
+     */
     private List<LocalTime> createTimeOptions() {
         List<LocalTime> timeOptions = new ArrayList<>();
         LocalTime start = LocalTime.of(8, 0);
@@ -209,7 +252,11 @@ public class ModifyAppointmentController implements Initializable {
 
         return timeOptions;
     }
-
+    /**
+     * Handles the "Cancel" button action to go back to the main menu.
+     *
+     * @param actionEvent The action event triggered by the button.
+     */
     public void cancelOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));

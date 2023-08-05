@@ -23,7 +23,7 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 /**
- * Controller class for the Reports screen.
+ * This controller class is responsible for populating the Reports screen with relevant data.
  * The reports page displays three unique reports which pull down data from the database to fulfill each reports intended request.
  * The controller contains an exit which returns you to the main menu.
  *
@@ -58,8 +58,20 @@ public class ReportsController implements Initializable {
     /**
      * Initializes the Reports screen.
      *
-     * @param url            The URL of the FXML file.
-     * @param resourceBundle The resource bundle containing localized strings.
+     * This method is automatically invoked when the Reports screen is loaded. It performs the following tasks:
+     * - Logs a message indicating that the Reports screen has been initialized.
+     * - Configures cell value factories to populate the TableView columns for each report.
+     * - Populates the TableView for each report by retrieving data from the database using the DBReports class.
+     *
+     * The Reports screen displays three different reports:
+     * - Report A: Shows the total number of appointments per month and appointment type.
+     * - Report B: Lists appointment details including the contact, title, description, type, start, end, and customer information.
+     * - Report C: Provides a summary of customers including customer ID, name, associated division, and country.
+     *
+     * Note: The data displayed in the reports is retrieved from the database using the corresponding methods in the DBReports class.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resource bundle to be used by this controller, or null if the controller doesn't require it.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

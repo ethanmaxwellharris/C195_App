@@ -45,10 +45,20 @@ public class ModifyCustomerController implements Initializable {
     private static final int maxTextLength100 = 100;
 
     /**
-     * Initializes the ModifyCustomerController.
+     * Initializes the Modify Customer screen.
      *
-     * @param url The location used to resolve relative paths.
-     * @param resourceBundle The resources for internationalization.
+     * This method is called when the Modify Customer screen is initialized, and it performs the following tasks:
+     * - Prints a debug message to indicate that the Modify Customer screen has been initialized.
+     * - Retrieves the customer to be modified from the MainScreenController.
+     * - Retrieves a list of countries and populates the customerCountryComboBox.
+     * - Sets initial values for customer ID, name, phone number, address, postal code, and division.
+     * - Based on the selected division, updates the customerCountryComboBox and customerDivisionComboBox
+     *   to show appropriate country and division options.
+     * - Adjusts the available division options based on the selected country.
+     * - Handles exceptions by printing stack traces.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,9 +112,16 @@ public class ModifyCustomerController implements Initializable {
     }
 
     /**
-     * Handles the "Save" button action to update customer information.
+     * Handles the "Save" action when modifying a customer.
      *
-     * @param actionEvent The action event triggered by the button.
+     * This method is invoked when the "Save" button is clicked on the Modify Customer screen. It performs the following tasks:
+     * - Parses and validates user inputs for customer details such as name, phone number, address, and postal code.
+     * - Retrieves the selected division from the customerDivisionComboBox.
+     * - If inputs are valid, updates the customer information in the database using the DBCustomers.modifyCustomer method.
+     * - Navigates back to the Main Menu screen upon successful modification.
+     * - Displays appropriate alert dialogs for input validation and exceptions.
+     *
+     * @param actionEvent The event representing the user's action (clicking the "Save" button).
      */
     public void saveCustomerOnAction(ActionEvent actionEvent) {
         try {
