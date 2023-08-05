@@ -18,6 +18,10 @@ public class Main extends Application {
     /**
      * The main entry point for the JavaFX application.
      *
+     * Note: The two lambda expressions are located in the following file path: -> controller Package -> MainScreenController -> Initialize Method
+     *  - Lambda #1: Updates the lambdaLabel with information about the selected appointment's duration and location.
+     *  - Lambda #2: Dynamically updates the appointmentsTableView based on the selected view toggle (All, Month, Week).
+     *
      * @param stage The primary stage for the application.
      * @throws Exception If an exception occurs during application startup.
      */

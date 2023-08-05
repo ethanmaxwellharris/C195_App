@@ -40,7 +40,6 @@ public class LoginController implements Initializable {
     @FXML public TextField usernameTextField;
     @FXML public PasswordField passwordPasswordField;
     @FXML public Label userLocationLabel2;
-    ResourceBundle rb;
 
     /**
      * Initializes the login interface.
@@ -55,12 +54,17 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Login is Initialized!");
         userLocationLabel2.setText(String.valueOf(ZoneId.systemDefault()));
+
+        ResourceBundle rb = ResourceBundle.getBundle("resources/Lang", Locale.getDefault());
         try {
-            Locale user = Locale.getDefault();
-            if (user.getLanguage().equals("fr")) {
-                rb = ResourceBundle.getBundle("Lang_fr_FR");
-            } else {
-                rb = ResourceBundle.getBundle("Lang_en_EN");
+            if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("es")) {
+                userLocationLabel.setText(rb.getString("label.languagePreferenceLabel"));
+                welcomeBackLabel.setText(rb.getString("label.welcomeBackLabel"));
+                welcomeBackSubTextLabel.setText(rb.getString("label.welcomeBackSubTextLabel"));
+                usernameLabel.setText(rb.getString("label.usernameLabel"));
+                passwordLabel.setText(rb.getString("label.passwordLabel"));
+                signInButtonLabel.setText(rb.getString("button.signInButtonLabel"));
+                exitButton.setText(rb.getString("button.exitButton"));
             }
             userLocationLabel.setText(rb.getString("label.languagePreferenceLabel"));
             welcomeBackLabel.setText(rb.getString("label.welcomeBackLabel"));
@@ -129,7 +133,12 @@ public class LoginController implements Initializable {
             for (Users user : validUsers) {
                 String userName = user.getUserName();
                 if (usernameTextField.getText().isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please enter a username");
+                    ResourceBundle rb = ResourceBundle.getBundle("resources/Lang", Locale.getDefault());
+                    String blankUsername = rb.getString("information.usernameBlank");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle(rb.getString("information.title"));
+                    alert.setHeaderText(rb.getString("information.header"));
+                    alert.setContentText(blankUsername);
                     alert.showAndWait();
                     return;
                 } else if (usernameTextField.getText().equals(userName)) {
@@ -138,7 +147,12 @@ public class LoginController implements Initializable {
                 }
             }
             if (!isUsernameValid) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Incorrect username");
+                ResourceBundle rb = ResourceBundle.getBundle("resources/Lang", Locale.getDefault());
+                String invalidUserName = rb.getString("error.invalidUserName");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(rb.getString("error.title"));
+                alert.setHeaderText(rb.getString("error.header"));
+                alert.setContentText(invalidUserName);
                 alert.showAndWait();
                 return;
             }
@@ -146,7 +160,12 @@ public class LoginController implements Initializable {
                 String userName = user.getUserName();
                 String password = user.getPassword();
                 if (passwordPasswordField.getText().isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please enter a password");
+                    ResourceBundle rb = ResourceBundle.getBundle("resources/Lang", Locale.getDefault());
+                    String blankPassword = rb.getString("information.passwordBlank");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle(rb.getString("information.title"));
+                    alert.setHeaderText(rb.getString("information.header"));
+                    alert.setContentText(blankPassword);
                     alert.showAndWait();
                     return;
                 } else if (usernameTextField.getText().equals(userName) && passwordPasswordField.getText().equals(password)) {
@@ -155,7 +174,12 @@ public class LoginController implements Initializable {
                 }
             }
             if (!isPasswordValid) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Incorrect password");
+                ResourceBundle rb = ResourceBundle.getBundle("resources/Lang", Locale.getDefault());
+                String invalidPassword = rb.getString("error.invalidPassword");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(rb.getString("error.title"));
+                alert.setHeaderText(rb.getString("error.header"));
+                alert.setContentText(invalidPassword);
                 alert.showAndWait();
                 return;
             }
