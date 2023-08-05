@@ -22,12 +22,11 @@ public class AddAppointmentController implements Initializable {
     public TextField apptTitleTextField;
     public TextField apptDescriptionTextField;
     public TextField apptLocationTextField;
-    public ComboBox<Appointments> apptContactComboBox;
     public ComboBox<String> apptTypeComboBox;
     public Button saveAppointmentButton;
     public Button cancelAppointmentButton;
     public ComboBox<Users> userIdComboBox;
-    public ComboBox<Customers> custIdComboBox; //Error needs to be displayed for overlapping customer appointments
+    public ComboBox<Customers> custIdComboBox;
     public ComboBox<Contacts> contactIdComboBox;
     public DatePicker apptEndDatePicker;
     public ComboBox apptEndTimeComboBox;
@@ -169,6 +168,9 @@ public class AddAppointmentController implements Initializable {
             } else if (endDate.isBefore(stDate)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "End date cannot be after the start date.");
                 alert.showAndWait();
+            } else if(apptTypeComboBox.getSelectionModel().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Type must be selected.");
+                alert.showAndWait();
             } else {
                 DBAppointments.addAppointment(title, description, location, type, start, end, customerId, userId, contactId);
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -181,7 +183,6 @@ public class AddAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You cannot leave drop-down's empty.");
             alert.setTitle("Nothing Selected Yet");
             alert.showAndWait();
-            x.printStackTrace();
         }
     }
 

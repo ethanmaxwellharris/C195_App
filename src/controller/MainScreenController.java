@@ -4,6 +4,7 @@ import dao.DBAppointments;
 import dao.DBCustomers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -25,42 +26,41 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
-    public Button addCustomerButton;
-    public Button modifyCustomerButton;
-    public Button deleteCustomerButton;
-    public Button addAppointmentButton;
-    public Button deleteAppointmentButton;
-    public Button modifyAppointmentButton;
-    public Button logoutButton;
-    public Button userLogButton;
-    public RadioButton weekViewRadio;
-    public ToggleGroup viewToggleGroup;
-    public RadioButton monthViewRadio;
-    public RadioButton allViewRadio;
-    public Label lambdaLabel;
-    public TableView<Customers> customersTableView;
-    public TableColumn<Customers, Integer> custIdCol;
-    public TableColumn<Customers, String> custNameCol;
-    public TableColumn<Customers, String> custAddressCol;
-    public TableColumn<Customers, String> custZipCol;
-    public TableColumn<Customers, String> custPhoneCol;
-    public TableColumn<Customers, String> custFLDCol;
-    public TableColumn<Customers, String> custDivisionCol;
-    public TableView<Appointments> appointmentsTableView;
-    public TableColumn<Appointments, Integer> apptIDCol;
-    public TableColumn<Appointments, String> apptTitleCol;
-    public TableColumn<Appointments, String> apptDescCol;
-    public TableColumn<Appointments, String> apptLocCol;
-    public TableColumn<Appointments, String> apptContactCol;
-    public TableColumn<Appointments, String> apptTypeCol;
-    public TableColumn<Appointments, LocalDateTime> apptStartCol;
-    public TableColumn<Appointments, LocalDateTime> apptEndCol;
-    public TableColumn<Appointments, Integer> apptCustIdCol;
-    public TableColumn<Appointments, Integer> apptUserIdCol;
+    @FXML public Button addCustomerButton;
+    @FXML public Button modifyCustomerButton;
+    @FXML public Button deleteCustomerButton;
+    @FXML public Button addAppointmentButton;
+    @FXML public Button deleteAppointmentButton;
+    @FXML public Button modifyAppointmentButton;
+    @FXML public Button logoutButton;
+    @FXML public Button userLogButton;
+    @FXML public RadioButton weekViewRadio;
+    @FXML public ToggleGroup viewToggleGroup;
+    @FXML public RadioButton monthViewRadio;
+    @FXML public RadioButton allViewRadio;
+    @FXML public Label lambdaLabel;
+    @FXML public TableView<Customers> customersTableView;
+    @FXML public TableColumn<Customers, Integer> custIdCol;
+    @FXML public TableColumn<Customers, String> custNameCol;
+    @FXML public TableColumn<Customers, String> custAddressCol;
+    @FXML public TableColumn<Customers, String> custZipCol;
+    @FXML public TableColumn<Customers, String> custPhoneCol;
+    @FXML public TableColumn<Customers, String> custDivisionCol;
+    @FXML public TableView<Appointments> appointmentsTableView;
+    @FXML public TableColumn<Appointments, Integer> apptIDCol;
+    @FXML public TableColumn<Appointments, String> apptTitleCol;
+    @FXML public TableColumn<Appointments, String> apptDescCol;
+    @FXML public TableColumn<Appointments, String> apptLocCol;
+    @FXML public TableColumn<Appointments, String> apptContactCol;
+    @FXML public TableColumn<Appointments, String> apptTypeCol;
+    @FXML public TableColumn<Appointments, LocalDateTime> apptStartCol;
+    @FXML public TableColumn<Appointments, LocalDateTime> apptEndCol;
+    @FXML public TableColumn<Appointments, Integer> apptCustIdCol;
+    @FXML public TableColumn<Appointments, Integer> apptUserIdCol;
     public static Customers selectedModifyCustomer;
     public static Appointments selectedModifyApppointment;
-    public Label localTimeLabel;
-    public Label estTimeLabel;
+    @FXML public Label localTimeLabel;
+    @FXML public Label estTimeLabel;
 
 
     @Override
@@ -260,16 +260,6 @@ public class MainScreenController implements Initializable {
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Reports Menu");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void onActionUserLog(ActionEvent actionEvent) throws IOException {
-        System.out.println("The user log button has been clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/UserLog.fxml"));
-        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("User Log Menu");
         stage.setScene(scene);
         stage.show();
     }

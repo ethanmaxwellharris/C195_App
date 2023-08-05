@@ -39,7 +39,6 @@ public class ModifyAppointmentController implements Initializable {
     @FXML public ComboBox apptEndTimeComboBox;
     @FXML public DatePicker apptStartDatePicker;
     private final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("Planning Session", "De-Briefing", "Execution", "Monitor & Control");
-    private final ObservableList<String> appointmentTimes = FXCollections.observableArrayList("8:00", "8:30", "");
     private static final int maxTextLength = 50;
     public Label timeNotice;
 
@@ -53,8 +52,6 @@ public class ModifyAppointmentController implements Initializable {
         ZonedDateTime latestAllowableTimeInUserZone = estNow.toLocalDate().atTime(latestAllowableTimeInEST).atZone(estZone).withZoneSameInstant(userZone);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         timeNotice.setText("The current time at HQ is " +  currentTimeInEST.format(timeFormatter) + " EST." + "\n" + "The latest you can schedule an appointment is " + latestAllowableTimeInEST.format(timeFormatter) + " EST or " + latestAllowableTimeInUserZone.format(timeFormatter) + " your time.");
-
-
 
         Appointments selectedModifyAppointment = MainScreenController.getModifyAppointment();
         apptIdTextField.setText(String.valueOf(selectedModifyAppointment.getAppointmentId()));
@@ -182,7 +179,10 @@ public class ModifyAppointmentController implements Initializable {
             }else if(endDate.isBefore(stDate)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "End date cannot be after the start date.");
                 alert.showAndWait();
-            }else {
+            }else if(apptTypeComboBox.getSelectionModel().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Type must be selected.");
+                alert.showAndWait();
+            } else {
                 DBAppointments.modifyAppointment(id, title, description, location, type, start, end, customerId, userId, contactId);
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
@@ -194,7 +194,6 @@ public class ModifyAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You cannot leave drop-down's empty.");
             alert.setTitle("Nothing Selected Yet");
             alert.showAndWait();
-            x.printStackTrace();
         }
     }
 

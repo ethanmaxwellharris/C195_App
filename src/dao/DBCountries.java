@@ -5,7 +5,16 @@ import javafx.collections.ObservableList;
 import model.Countries;
 import java.sql.*;
 
+/**
+ * This class provides methods to retrieve information about countries from the database.
+ */
 public class DBCountries {
+
+    /**
+     * Retrieves a list of all countries from the database.
+     *
+     * @return An ObservableList of Countries, each containing country details.
+     */
     public static ObservableList<Countries> getAllCountries(){
         ObservableList<Countries> clist = FXCollections.observableArrayList();
 
@@ -31,6 +40,10 @@ public class DBCountries {
         return clist;
     }
 
+    /**
+     * Checks date conversion for testing purposes.
+     * This method prints the converted Create_Date values from the database.
+     */
     public static void checkDateConversion() {
         System.out.println("CREATE DATE TEST");
         String sql = "select Create_Date from countries";

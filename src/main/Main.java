@@ -1,27 +1,26 @@
 package main;
 
 import dao.DBConnection;
-import dao.DBCustomers;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
+/**
+ * The main class responsible for launching the application and displaying the initial login interface.
+ *
+ * @author Ethan Harris
+ */
 public class Main extends Application {
 
+    /**
+     * The main entry point for the JavaFX application.
+     *
+     * @param stage The primary stage for the application.
+     * @throws Exception If an exception occurs during application startup.
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
@@ -30,6 +29,12 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * The main method to launch the application.
+     *
+     * @param args The command-line arguments.
+     * @throws IOException If an I/O exception occurs during application startup.
+     */
     public static void main(String[] args) throws IOException {
         DBConnection.openConnection();
         launch(args);

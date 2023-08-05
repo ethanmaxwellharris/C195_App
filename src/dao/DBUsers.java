@@ -4,13 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Users;
 
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class provides methods to retrieve and manipulate user data from the database.
+ */
 public class DBUsers {
+    /**
+     * Retrieves a list of all users from the database.
+     *
+     * @return An ObservableList of Users, each containing user details.
+     */
     public static ObservableList<Users> getAllUsers() {
         ObservableList<Users> uList = FXCollections.observableArrayList();
 
@@ -30,27 +36,7 @@ public class DBUsers {
         }
         return uList;
     }
-
-//    @Override
+/*Unsure if I need this still - hanging on to it.*/
 //    public String toString(){
 //        return("#" + Integer.toString(userId));
-//    }
-
-//    public static int confirmUser(String userName, String password) throws IOException {
-//
-//        String sql = "SELECT * FROM client_schedule.users WHERE User_Name '" + userName + "' AND Password = '" + password + "'";
-//        try {
-//            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//            rs.next();
-//            if (rs.getString("User_Name").equals(userName)){
-//                if(rs.getString("Password").equals(password)) {
-//                    return rs.getInt("User_ID");
-//                }
-//
-//            }
-//        } catch (Exception ignored) {
-//        }
-//        return -1;
-//    }
 }

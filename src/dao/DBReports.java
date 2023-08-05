@@ -11,10 +11,18 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+
+/**
+ * This class provides methods to retrieve various types of reports from the database.
+ */
 public class DBReports {
+    /**
+     * Retrieves a report containing appointment counts by type and month.
+     *
+     * @return An ObservableList of Reports, each containing type, month, and total appointments.
+     */
     public static ObservableList<Reports> getReportA() {
         ObservableList<Reports> aReport = FXCollections.observableArrayList();
-
         try {
             String sql = "SELECT a.Type, MONTHNAME(a.Start) AS Month, COUNT(*) AS TotalAppointments FROM client_schedule.appointments a GROUP BY a.Type, MONTH(a.Start) ORDER BY MONTH(a.Start), a.Type;";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
@@ -32,13 +40,18 @@ public class DBReports {
         return aReport;
     }
 
+    /**
+     * Retrieves a report containing detailed information about appointments and contacts.
+     *
+     * @return An ObservableList of ReportB, each containing appointment details and contact information.
+     */
     public static ObservableList<ReportB> getReportB() {
         ObservableList<ReportB> bReport = FXCollections.observableArrayList();
         try {
             String sql = "SELECT co.Contact_Name, ap.Title, ap.Description, ap.Appointment_ID, ap.Type, ap.Start, ap.End, ap.Customer_ID FROM client_schedule.appointments ap JOIN client_schedule.contacts co ON ap.Contact_ID = co.Contact_ID ORDER BY co.Contact_Name, ap.Start;";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 String contactName = rs.getString("Contact_Name");
                 String title = rs.getString("Title");
                 String description = rs.getString("Description");
@@ -58,6 +71,11 @@ public class DBReports {
         return bReport;
     }
 
+    /**
+     * Retrieves a report containing customer information along with division and country details.
+     *
+     * @return An ObservableList of ReportC, each containing customer, division, and country information.
+     */
     public static ObservableList<ReportC> getReportC() {
         ObservableList<ReportC> cReport = FXCollections.observableArrayList();
         try {
@@ -77,5 +95,5 @@ public class DBReports {
         }
         return cReport;
     }
-
 }
+

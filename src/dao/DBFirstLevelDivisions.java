@@ -3,12 +3,19 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.FirstLevelDivisions;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class provides methods to retrieve information about first-level divisions from the database.
+ */
 public class DBFirstLevelDivisions {
+    /**
+     * Retrieves a list of all first-level divisions.
+     *
+     * @return An ObservableList of FirstLevelDivisions, each containing division details.
+     */
     public static ObservableList<FirstLevelDivisions> getAllFirstLevelDivisions() {
         ObservableList<FirstLevelDivisions> fList = FXCollections.observableArrayList();
 
@@ -29,6 +36,11 @@ public class DBFirstLevelDivisions {
         return fList;
     }
 
+    /**
+     * Retrieves a list of first-level divisions in the United States.
+     *
+     * @return An ObservableList of FirstLevelDivisions, each containing US division details.
+     */
     public static ObservableList<FirstLevelDivisions> getUSFirstLevelDivisions() {
         ObservableList<FirstLevelDivisions> usList = FXCollections.observableArrayList();
 
@@ -49,7 +61,11 @@ public class DBFirstLevelDivisions {
         return usList;
     }
 
-
+    /**
+     * Retrieves a list of first-level divisions in Canada.
+     *
+     * @return An ObservableList of FirstLevelDivisions, each containing Canadian division details.
+     */
     public static ObservableList<FirstLevelDivisions> getCanFirstLevelDivisions() {
         ObservableList<FirstLevelDivisions> canList = FXCollections.observableArrayList();
 
@@ -70,6 +86,11 @@ public class DBFirstLevelDivisions {
         return canList;
     }
 
+    /**
+     * Retrieves a list of first-level divisions in the United Kingdom.
+     *
+     * @return An ObservableList of FirstLevelDivisions, each containing UK division details.
+     */
     public static ObservableList<FirstLevelDivisions> getUKFirstLevelDivisions() {
         ObservableList<FirstLevelDivisions> ukList = FXCollections.observableArrayList();
 
@@ -89,6 +110,4 @@ public class DBFirstLevelDivisions {
         }
         return ukList;
     }
-
-
 }
