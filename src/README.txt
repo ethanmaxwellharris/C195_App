@@ -1,10 +1,10 @@
 # Title: C195 Scheduling App
 
-Description: This application has been developed for the C195 Software II course. The application was designed by Software Company EMH to meet the business needs of Global Consulting Agency XYZ. The organization outlined specific business requirements that must be met as part of the application. From these requirements, we created solution's during the development of the application.
+# Purpose: This application has been developed for the C195 Software II course. The application was designed by Software Company EMH to meet the business needs of Global Consulting Agency XYZ. The organization outlined specific business requirements that must be met as part of the application. From these requirements, we created solution's during the development of the application.
 
 ## Author & Version
 - Ethan Harris [ehar364@wgu.edu]
-- Submission Date: 07/xx/2023
+- Submission Date: 08/05/2023
 - IDE: IntelliJ IDEA 2021.1.3 (Community Edition)
 - JDK: Java SE 11.0.4
 - JavaFX: JavaFX-SDK-17.0.1

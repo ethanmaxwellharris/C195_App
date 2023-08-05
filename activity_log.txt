@@ -21,3 +21,5 @@ Login Failed || Login Attempt 20 || Username:  || Password:  || Timestamp: 2023-
 Login Failed || Login Attempt 21 || Username:  || Password:  || Timestamp: 2023-08-05T10:00:32.644790700
 Login Failed || Login Attempt 22 || Username: test || Password:  || Timestamp: 2023-08-05T10:00:37.125071
 Login Successful || Login Attempt 23 || Username: test || Password: test || Timestamp: 2023-08-05T10:00:40.204098600
+Login Successful || Login Attempt 24 || Username: test || Password: test || Timestamp: 2023-08-05T12:12:34.929222
+Login Successful || Login Attempt 25 || Username: admin || Password: admin || Timestamp: 2023-08-05T12:17:48.761520700
